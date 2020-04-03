@@ -1,0 +1,86 @@
+###  soda/osfamilymap.yaml
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+Arch:
+  pkgs:
+    - python-pip
+    - python2-pip     ##see https://github.com/saltstack/salt/issues/48632
+    - thin-provisioning-tools
+
+Debian:
+  pkgs:
+    - python-pip
+    - librados-dev
+    - librbd-dev
+    - libradosstriper-dev
+    - gcc
+    - make
+    - dos2unix
+    - docker-compose
+    - nodejs
+    - npm
+    - thin-provisioning-tools
+    - libffi-dev
+  systemd:
+    dir: /usr/lib/systemd/system
+
+RedHat:
+  compose: /bin/docker-compose
+  pips:
+    - python-brick-cinderclient-ext
+    - python-cinderclient 
+  pkgs:
+    - python2-pip
+    - python2-click
+    - python-tox
+    - librados-devel     # requires ceph.repo, obsoletes librados2
+    - librbd-devel       # obsoletes librbd1
+    - docker-compose
+    - device-mapper-persistent-data
+    - python-setuptools
+    - lvm2
+    - gcc
+    - make
+    - dos2unix
+    - nodejs
+    - net-tools
+    - npm
+    - libffi-devel 
+    - bind-utils
+    # kdump
+    # https://centos7.iuscommunity.org/ius-release.rpm
+  backend:
+    block:
+      container:
+        cinder:
+          makefile:
+            platform: 'centos:7'
+
+Suse:
+  pkgs:
+    - python3-pip
+    - librados2
+    - librados-devel
+    - librbd-devel
+    - gcc
+    - make
+    - docker-compose
+    - nodejs8
+    - npm8
+    - thin-provisioning-tools
+    - libffi7
+    - python3-setuptools
+  backend:
+    block:
+      container:
+        cinder:
+          makefile:
+            platform: 'centos:7'
+
+FreeBSD:
+  salt:
+    basedir:
+      states: /usr/local/salt/base
+      pillars: /usr/local/salt/pillar
+      formula: /usr/local/salt/formula

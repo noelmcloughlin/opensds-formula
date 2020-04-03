@@ -1,0 +1,15 @@
+### soda/nbp/defaults.yaml
+# vim: sts=2 ts=2 sw=2 et ai
+
+soda:
+  nbp:
+    release: 'v0.4.0'
+    plugin_type: provisioner
+    ids:
+      - nbp
+    daemon:
+      nbp:
+        strategy: repo-config-systemd
+        repo:
+          url: https://github.com/sodafoundation/nbp.git
+          branch: latest

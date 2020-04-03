@@ -1,0 +1,53 @@
+### soda/controller/defaults.yaml
+# vim: sts=2 ts=2 sw=2 et ai
+
+soda:
+  controller:
+    release: v1beta
+    service: soda
+    ids:
+      - soda
+      - sodalet
+    binaries:
+      soda:
+        - osdslet
+        - osdsctl
+        - osdsdock
+    conf:
+      let:
+        api_endpoint: '127.0.0.1:50040'
+        graceful: True
+        log_file: /var/log/soda/let.log
+        socket_order: inc
+        auth_strategy: keystone
+    container:
+      soda:
+        image: sodafoundation/controller
+        version: latest
+        ports:
+          - 50040
+          - 50040/udp
+        port_bindings:
+          - '127.0.0.1:50040:50040'
+        volumes:
+          - '/etc/soda/:/etc/soda'
+    daemon:
+      soda:
+        strategy: repo-config-build-binaries-systemd
+        endpoint_ipv4: 127.0.0.1
+        endpoint_port: 50040
+        repo:
+          url: https://github.com/sodafoundation/controller.git
+          branch: v1.0.0
+          build_cmd: make
+          build_subdir: ''
+          binaries_subdir: '/build/out/bin'
+          clean_cmd: make clean
+        start: /usr/local/bin/osdslet
+        stop: /usr/bin/killall osdslet
+        before:
+          - soda-csi
+          - soda-provisioner
+          - soda-dock
+          - soda-cinder
+          - soda-dashboard

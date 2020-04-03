@@ -1,0 +1,34 @@
+### soda/multicloud/defaults.yaml
+# vim: sts=2 ts=2 sw=2 et ai
+
+soda:
+  multicloud:
+    release: v1
+    service: multicloud    # or soda ?
+    ids:
+      - multicloud
+    binaries:
+      multicloud:
+        - api
+        - backend
+        - dataflow
+        - datamover
+        - s3
+        - examples
+        - tidb_data
+    conf:
+      multicloud:
+        endpoint: 127.0.0.1
+        port: 8089
+    container:
+      multicloud:
+    daemon:
+      multicloud:
+        strategy: keystone-repo-config-compose-build-systemd
+        repo:
+          url: https://github.com/sodafoundation/multicloud.git
+          branch: stable/Elba
+          build_cmd: make docker
+          build_subdir: ''
+          binaries_subdir: ''  ##'/build/out/bin'
+          clean_cmd: make clean

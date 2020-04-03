@@ -1,16 +1,16 @@
-{% from "site.j2" import sitedata as site %}
+{% from 'site.j2' import sitedata as site %}
 
-opensds:
+soda:
   deploy_project: {{ site.deploy_project }}
-  host: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
+  host: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}
   ports:
-    opensds: {{ site.port_hotpot }}
+    controller: {{ site.port_controller }}
     dock: {{ site.port_dock }}
   dir:
-    go: {{ site.go_path }}/src/github.com/opensds
+    go: {{ site.go_path }}/src/github.com/soda
   environ:
-    opensds_endpoint: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}:{{ site.port_hotpot }}
-    opensds_auth_strategy: {{ site.auth_strategy }}
+    controller_endpoint: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}:{{ site.port_controller }}
+    soda_auth_strategy: {{ site.auth_strategy }}
     csi_endpoint: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}:{{ site.port_csi }}
     gopath: {{ site.go_path }}
 
@@ -41,24 +41,24 @@ opensds:
               advanced:
                 custom_feature_g: 'h'
         authOptions:
-          endpoint: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}/identity'
-          cinderEndpoint: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}:8776/v2'
+          endpoint: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}/identity'
+          cinderEndpoint: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}:8776/v2'
           domainId: {{ site.project_domain_name }}
           projectName: {{ site.project_name }}
           domainName: {{ site.user_domain_name }}
-          username: {{ site.hotpot_service }}
+          username: {{ site.controller_service }}
           password: {{ site.devstack_password }}
-          tenantName: {{ site.hotpot_service }}
+          tenantName: {{ site.controller_service }}
 
       nfs:
         tgtBindIp: {{ site.tgtBindIp }}
 
       netapp_ontap_san:
         version: 1
-        username: {{ site.hotpot_service }}
+        username: {{ site.controller_service }}
         password: {{ site.devstack_password }}
-        managementLIF: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
-        dataLIF: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
+        managementLIF: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}
+        dataLIF: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}
         
       lvm:
         tgtBindIp: {{ site.tgtBindIp }}
@@ -101,15 +101,15 @@ opensds:
             Node-ID: 1
 
 
-  ########### DOCKS ###############
+  ########### DOCK ###############
   dock:
-    opensdsconf:
-      osdsdock:
-        api_endpoint: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}:{{ site.port_dock }}
+    conf:
+      dock:
+        api_endpoint: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}:{{ site.port_dock }}
         dock_type: {{ site.dock_type }}
         enabled_backends: {{ site.enabled_backends }}
     container:
-      osdsdock:
+      dock:
         image: {{ site.container_dock_img }}
         version: {{ site.dock_version }}
         ports:
@@ -118,119 +118,119 @@ opensds:
         port_bindings:
           - '{{ site.port_dock }}:{{ site.port_dock }}'
     daemon:
-      opensds:
+      api:
         strategy: binaries
-      osdsdock:
+      dock:
         strategy: config-systemd
 
-  ############ OPENSDS TELEMETRY ###########
+  ############ SODA TELEMETRY ###########
   telemetry: {}
 
-  ############ OPENSDS GELATO #############
-  gelato:
-    release: {{ site.gelato_release }}
-    service: {{ site.gelato_service }}
+  ############ SODA MULTICLOUD #############
+  multicloud:
+    release: {{ site.multicloud_release }}
+    service: {{ site.multicloud_service }}
     ids:
-      - {{ site.gelato_service }}
-    opensdsconf:
-      {{ site.gelato_service }}:
-        endpoint: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"  }}
-        port: {{ site.port_gelato }}
+      - {{ site.multicloud_service }}
+    conf:
+      {{ site.multicloud_service }}:
+        endpoint: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'  }}
+        port: {{ site.port_multicloud }}
     container:
-      {{ site.gelato_service }}:
+      {{ site.multicloud_service }}:
     daemon:
-      {{ site.gelato_service }}:
+      {{ site.multicloud_service }}:
         strategy: keystone-repo-config-compose-build-systemd
         repo:
-          branch: {{ site.gelato_release }}
+          branch: {{ site.multicloud_release }}
 
 
-  ############ OPENSDS AUTH #############
+  ############ SODA AUTH #############
   auth:
     ids:
-      - osdsauth
+      - sodaauth
       - keystone_authtoken
-    opensdsconf:
+    conf:
       keystone_authtoken:
-        memcached_servers: '{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"  }}:11211'
-        auth_uri: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}/identity'
-        auth_url: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}/identity'
-        username: {{ site.hotpot_service }}
+        memcached_servers: '{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'  }}:11211'
+        auth_uri: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}/identity'
+        auth_url: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}/identity'
+        username: {{ site.controller_service }}
         password: {{ site.devstack_password }}
         auth_type: password
         project_domain_name: {{ site.project_domain_name }}
         project_name: {{ site.project_name }}
         user_domain_name: {{ site.user_domain_name }}
     daemon:
-      osdsauth:
-        strategy: config-keystone   ##verified on Ubuntu opensds-installer/salt
-        endpoint_ipv4: http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
-        endpoint_port: {{ site.port_hotpot }}
+      sodaauth:
+        strategy: config-keystone   ##verified on Ubuntu sodafoundation/installer/salt
+        endpoint_ipv4: http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}
+        endpoint_port: {{ site.port_controller }}
 
-  ############ OPENSDS DATABASE #############
+  ############ SODA DATABASE #############
   database:
     ids:
       - database
       - etcd
-    opensdsconf:
+    conf:
       database:
-        endpoint: '{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}:{{ site.port_auth1 }},http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}:{{ site.port_auth2 }}'
-        credential: '{{ site.hotpot_service }}:{{ site.devstack_password }}@{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}:{{ site.port_mysql }}/dbname'
+        endpoint: '{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}:{{ site.port_auth1 }},http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}:{{ site.port_auth2 }}'
+        credential: '{{ site.controller_service }}:{{ site.devstack_password }}@{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}:{{ site.port_mysql }}/dbname'
     daemon:
       database:
         strategy: config-etcd-formula/container
 
 
-  ############### OPENSDS HOTPOT ################
-  hotpot:
-    release: {{ site.hotpot_release }}
-    service: {{ site.hotpot_service }}
-    opensdsconf:
-      osdslet:
-        api_endpoint: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}:{{ site.port_hotpot }}
+  ############### SODA CONTROLLER ################
+  controller:
+    release: {{ site.controller_release }}
+    service: {{ site.controller_service }}
+    conf:
+      sodalet:
+        api_endpoint: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}:{{ site.port_controller }}
         auth_strategy: {{ site.auth_strategy }}   ### note: noauth verified on ubuntu salt installer
     container:
-      opensds:
-        image: {{ site.container_hotpot_img }}
-        version: {{ site.hotpot_version }}
+      controller:
+        image: {{ site.container_controller_img }}
+        version: {{ site.controller_version }}
         ports:
-          - {{ site.port_hotpot }}
-          - {{ site.port_hotpot }}/udp
+          - {{ site.port_controller }}
+          - {{ site.port_controller }}/udp
         port_bindings:
-          - {{site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}:{{site.port_hotpot}}:{{site.port_hotpot}}
+          - {{site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}:{{site.port_controller}}:{{site.port_controller}}
     daemon:
-      opensds:
+      controller:
         strategy: repo-config-build-binaries-systemd
-        endpoint_ipv4: http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
-        endpoint_port: {{ site.port_hotpot }}
+        endpoint_ipv4: http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}
+        endpoint_port: {{ site.port_controller }}
 
-  ############### OPENSDS DASHBOARD(S) ################
+  ############### SODA DASHBOARD(S) ################
   dashboard:
-    opensdsconf:
+    conf:
       dashboard:
-        endpoint: http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
-        port: {{ site.port_hotpot }}
+        endpoint: http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}
+        port: {{ site.port_controller }}
     container:
       dashboard:
          image: {{ site.container_dashboard_img }}
          version: {{ site.dashboard_version }}
          env:
-           OPENSDS_HOST_IP: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
+           SODA_HOST_IP: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}
     daemon:
       dashboard:
         strategy: config-container
         repo:
           branch: {{ site.dashboard_version }}
 
-  ############### OPENSDS SUSHI NORTH-BOUND-PLUGINS ################
-  sushi:
-    release: {{ site.sushi_release }}
+  ############### SODA NORTH-BOUND-PLUGINS ################
+  nbp:
+    release: {{ site.nbp_release }}
     plugin_type: {{ site.dock_type }}
     daemon:
       nbp:
         strategy: repo-config-systemd
         repo:
-          branch: {{ site.sushi_release }}
+          branch: {{ site.nbp_release }}
 
 
 ################################
@@ -239,17 +239,17 @@ opensds:
 
 lvm:
   files:
-    loopbackdir: {{ site.hotpot_path }}/volumegroups    #Where to create backing files
+    loopbackdir: {{ site.controller_path }}/volumegroups    #Where to create backing files
     remove:
-      - {{ site.hotpot_path }}/volumegroups/{{ site.cinder_poolname }}.img
-      - {{ site.hotpot_path }}/volumegroups/{{ site.ceph_poolname }}.img
-      - {{ site.hotpot_path }}/volumegroups/{{ site.lvm_poolname }}.img
-      - {{ site.hotpot_path }}/volumegroups/{{ site.fusionstorage_poolname }}.img
-      - {{ site.hotpot_path }}/volumegroups/{{ site.dorado_poolname }}.img
+      - {{ site.controller_path }}/volumegroups/{{ site.cinder_poolname }}.img
+      - {{ site.controller_path }}/volumegroups/{{ site.ceph_poolname }}.img
+      - {{ site.controller_path }}/volumegroups/{{ site.lvm_poolname }}.img
+      - {{ site.controller_path }}/volumegroups/{{ site.fusionstorage_poolname }}.img
+      - {{ site.controller_path }}/volumegroups/{{ site.dorado_poolname }}.img
     create:
       ### dd: copy a file, converting and formatting according to the operands
       dd:
-        {{ site.hotpot_path }}/volumegroups/{{ site.lvm_poolname }}.img:      #10G
+        {{ site.controller_path }}/volumegroups/{{ site.lvm_poolname }}.img:      #10G
           options:
             if: /dev/urandom
             bs: 1048576
@@ -257,29 +257,29 @@ lvm:
 
       ### or truncate: Shrink or extend the size of each FILE to the specified size
       truncate:
-        {{ site.hotpot_path }}/volumegroups/{{ site.cinder_poolname }}.img:
+        {{ site.controller_path }}/volumegroups/{{ site.cinder_poolname }}.img:
           options:
             size: 10G
       'truncate ':
-        {{ site.hotpot_path }}/volumegroups/{{ site.ceph_poolname }}.img:
+        {{ site.controller_path }}/volumegroups/{{ site.ceph_poolname }}.img:
           options:
             size: 10G
       'truncate  ':
-        {{ site.hotpot_path }}/volumegroups/{{ site.dorado_poolname }}.img:
+        {{ site.controller_path }}/volumegroups/{{ site.dorado_poolname }}.img:
           options:
             size: 10G
       'truncate   ':
-        {{ site.hotpot_path }}/volumegroups/{{ site.fusionstorage_poolname }}.img:
+        {{ site.controller_path }}/volumegroups/{{ site.fusionstorage_poolname }}.img:
           options:
             size: 10GM
 
       ### setup backing devices
       losetup:
-        {{ site.hotpot_path }}/volumegroups/{{ site.lvm_poolname }}.img:
+        {{ site.controller_path }}/volumegroups/{{ site.lvm_poolname }}.img:
           options:
             show: True
             find: True
-        {{ site.hotpot_path }}/volumegroups/{{ site.cinder_poolname }}.img:
+        {{ site.controller_path }}/volumegroups/{{ site.cinder_poolname }}.img:
           options:
             show: True
             find: True
@@ -293,12 +293,12 @@ lvm:
   vg:
     remove:
       cinder-volumes:
-      opensds-volumes:
+      soda-volumes:
     create:
       cinder-volumes:
         devices:
           - /dev/loop0
-      opensds-volumes:
+      soda-volumes:
         devices:
           - /dev/loop1
 
@@ -334,13 +334,14 @@ firewalld:
           - 8883         ## mqtt-tls client
           - 15674        ## STOMP-over-WebSockets
           - 15675        ## MQTT-over-WebSockets
-    opensds:
-      short: opensds
-      description: Open Software Defined Storage
+    soda:
+      short: soda
+      description: Soda Foundation
       ports:
         tcp:
-          - {{ site.port_hotpot }}
-          - {{ site.port_gelato }}
+          - {{ site.port_api }}
+          - {{ site.port_controller }}
+          - {{ site.port_multicloud }}
           - {{ site.port_dock }}
           - {{ site.port_auth1 }}
           - {{ site.port_auth2 }}
@@ -348,7 +349,8 @@ firewalld:
           - {{ site.port_mysql|int + 1 }}
           - 11211                 ## memcached
           - 3260                  ## tgt
-          - 5672                  ## docker-proxy
+          - 5672                  ## docker-proxy/rabbitmq
+          - 6379                  ## redis
           - 33060:33070           ## cinder ?
           - 3306:3307             ## mysql
           - 8776                  ## cinder-api
@@ -376,7 +378,7 @@ firewalld:
         - ntp
         - saltstack
         - ceph
-        - opensds
+        - soda
         - rabbitmq
 
       {%- if grains.os == 'Fedora' %}
@@ -389,46 +391,46 @@ firewalld:
         - ntp
         - saltstack
         - ceph
-        - opensds
+        - soda
       {%- endif %}
 
 
 devstack:
   local:
     os_project_name: {{ site.project_name }}
-    os_username: {{ site.hotpot_service }}
+    os_username: {{ site.controller_service }}
     os_password: {{ site.devstack_password }}
     admin_password: {{ site.devstack_password }}
     #git_branch: 'stable/rocky'
     enabled_services: {{ site.devstack_enabled_services }}
-    host_ipv4: {{ site.host_ipv4 or "127.0.0.1" }}
+    host_ipv4: {{ site.host_ipv4 or '127.0.0.1' }}
     host_ipv6: {{ site.host_ipv6 or '::1/128' }}
-    service_host: {{ site.host_ipv4 or "127.0.0.1" }}
-    db_host: {{ site.db_host or "127.0.0.1" }}
+    service_host: {{ site.host_ipv4 or '127.0.0.1' }}
+    db_host: {{ site.db_host or '127.0.0.1' }}
   dir:
     dest: {{ site.devstack_path }}
   cli:
     service:
       create:
-        {{ site.hotpot_service }}{{ site.hotpot_release }}:
+        {{ site.controller_service }}{{ site.controller_release }}:
           options:
-            name: {{ site.hotpot_service }}{{ site.hotpot_release }}
-            description: "{{ site.hotpot_service }} Service"
+            name: {{ site.controller_service }}{{ site.controller_release }}
+            description: '{{ site.controller_service }} Service'
             enable: True
-        {{ site.gelato_service }}{{ site.gelato_release }}:
+        {{ site.multicloud_service }}{{ site.multicloud_release }}:
           options:
-            name: "{{ site.gelato_service }}{{ site.gelato_release }}"
-            description: "{{ site.gelato_service }} service"
+            name: '{{ site.multicloud_service }}{{ site.multicloud_release }}'
+            description: '{{ site.multicloud_service }} service'
             enable: True
     user:
       create:
-        {{ site.hotpot_service }}{{ site.hotpot_release }}:
+        {{ site.controller_service }}{{ site.controller_release }}:
           options:
             domain: {{ site.user_domain_name }}
             password: {{ site.devstack_password }}
             project: {{ site.project_name }}
             enable: True
-        {{ site.gelato_service }}{{ site.gelato_release }}:
+        {{ site.multicloud_service }}{{ site.multicloud_release }}:
           options:
             domain: {{ site.user_domain_name }}
             password: {{ site.devstack_password }}
@@ -442,8 +444,8 @@ devstack:
       add user:
         {{ site.project_name }}:
           target:
-            - {{ site.hotpot_service }}{{ site.hotpot_release }}
-            - {{ site.gelato_service }}{{ site.gelato_release }}
+            - {{ site.controller_service }}{{ site.controller_release }}
+            - {{ site.multicloud_service }}{{ site.multicloud_release }}
         admins:
           options:
             domain: {{ site.user_domain_name }}
@@ -455,8 +457,8 @@ devstack:
           options:
             project: {{ site.project_name }}
           user:
-            - opensds{{ site.hotpot_release }}
-            - {{ site.gelato_service }}{{ site.gelato_release }}
+            - soda{{ site.controller_release }}
+            - {{ site.multicloud_service }}{{ site.multicloud_release }}
         {{ site.project_name }}:
           options:
             project: {{ site.project_name }}
@@ -464,27 +466,27 @@ devstack:
             - {{ site.project_name }}
     endpoint:
       create:
-        'opensds{{site.hotpot_release}} public https://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}/{{ site.port_hotpot }}/{{ site.hotpot_release }}/%\(tenant_id\)s':
+        'soda{{site.controller_release}} public https://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}/{{ site.port_controller }}/{{ site.controller_release }}/%\(tenant_id\)s':
           options:
             region: RegionOne
             enable: True
-        'opensds{{site.hotpot_release}} internal https://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}/{{ site.port_hotpot }}/{{ site.hotpot_release }}/%\(tenant_id\)s':
+        'soda{{site.controller_release}} internal https://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}/{{ site.port_controller }}/{{ site.controller_release }}/%\(tenant_id\)s':
           options:
             region: RegionOne
             enable: True
-        'opensds{{site.hotpot_release}} admin https://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}/{{ site.port_hotpot }}/{{ site.hotpot_release }}/%\(tenant_id\)s':
+        'soda{{site.controller_release}} admin https://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}/{{ site.port_controller }}/{{ site.controller_release }}/%\(tenant_id\)s':
           options:
             region: RegionOne
             enable: True
-        '{{ site.gelato_service }}{{ site.gelato_release }} public https://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}:{{ site.port_gelato }}/{{ site.gelato_release }}/%\(tenant_id\)s':
+        '{{ site.multicloud_service }}{{ site.multicloud_release }} public https://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}:{{ site.port_multicloud }}/{{ site.multicloud_release }}/%\(tenant_id\)s':
           options:
             region: RegionOne
             enable: True
-        '{{ site.gelato_service }}{{ site.gelato_release }} internal https://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}:{{ site.port_gelato }}/{{ site.gelato_release }}/%\(tenant_id\)s':
+        '{{ site.multicloud_service }}{{ site.multicloud_release }} internal https://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}:{{ site.port_multicloud }}/{{ site.multicloud_release }}/%\(tenant_id\)s':
           options:
             region: RegionOne
             enable: True
-        '{{ site.gelato_service }}{{ site.gelato_release }} admin https://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}:{{ site.port_gelato }}/{{ site.gelato_release }}/%\(tenant_id\)s':
+        '{{ site.multicloud_service }}{{ site.multicloud_release }} admin https://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}:{{ site.port_multicloud }}/{{ site.multicloud_release }}/%\(tenant_id\)s':
           options:
             region: RegionOne
             enable: True
@@ -542,16 +544,16 @@ nginx:
         {%- else %}
             - index: 'index.html index.htm'
         {%- endif %}
-            - location /{{ site.hotpot_release }}/:
-              - proxy_pass: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}:{{ site.port_hotpot }}/{{ site.hotpot_release }}'
+            - location /{{ site.controller_release }}/:
+              - proxy_pass: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}:{{ site.port_controller }}/{{ site.controller_release }}'
             - location /v3/:
-              - proxy_pass: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}/identity/v3/'
+              - proxy_pass: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}/identity/v3/'
             - location /v1beta/:
-              - proxy_pass: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}:{{ site.port_hotpot }}/{{ site.hotpot_release }}/'
+              - proxy_pass: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}:{{ site.port_controller }}/{{ site.controller_release }}/'
 
 memcached:
   daemonize: True
-  listen_address: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
+  listen_address: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}
 
 golang:
   lookup:
@@ -568,28 +570,28 @@ mysql:
   server:
     root_password: {{ site.devstack_password }}
     mysqld:
-      bind_address: {{ site.db_host or site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
+      bind_address: {{ site.db_host or site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}
 
 etcd:
   dir:
     tmp: /tmp/etcd_tmp
   service:
-    name: osdsdb
-    data_dir: /var/lib/etcd/osdsdb
-    initial_cluster: 'osdsdb=http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}:{{ site.port_auth2 }}'
+    name: sodadb
+    data_dir: /var/lib/etcd/sodadb
+    initial_cluster: 'sodadb=http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}:{{ site.port_auth2 }}'
     initial_cluster_state: new
-    initial_cluster_token: osdsdb-1
-    initial_advertise_peer_urls: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1"}}:{{site.port_auth2}}'
-    listen_peer_urls: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}:{{ site.port_auth2 }}'
-    listen_client_urls: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}:{{ site.port_auth1 }}'
-    advertise_client_urls: 'http://{{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}:{{ site.port_auth1 }}'
+    initial_cluster_token: sodadb-1
+    initial_advertise_peer_urls: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1'}}:{{site.port_auth2}}'
+    listen_peer_urls: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}:{{ site.port_auth2 }}'
+    listen_client_urls: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}:{{ site.port_auth1 }}'
+    advertise_client_urls: 'http://{{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}:{{ site.port_auth1 }}'
     #cmd_args: '--auto-tls --peer-auto-tls'
     cmd_args: ''
   docker:
     enabled: True
     image: {{ site.container_etcd_img }}
     version: {{ site.etcd_version }}
-    container_name: osdsdb
+    container_name: sodadb
     skip_translate: None
     port_bindings:
       - '{{ site.port_auth1 }}:{{ site.port_auth1 }}'
@@ -636,8 +638,8 @@ prometheus:
         smtp_smarthost: 'localhost:25'
         smtp_from: 'alertmanager@example.org'
         smtp_auth_username: 'alertmanager'
-        smtp_auth_password: "multiline\nmysecret"
-        smtp_hello: "host.example.org"
+        smtp_auth_password: 'multiline\nmysecret'
+        smtp_hello: 'host.example.org'
       route:
         group_by: ['alertname', 'cluster', 'service']
         group_wait: 30s
@@ -681,7 +683,7 @@ packages:
       - mariadb-server
       - mariadb-backup
       - mariadb-errmsg
-     {%- elif grains.os == "Ubuntu" %}  {# what about debian os? #}
+     {%- elif grains.os == 'Ubuntu' %}  {# what about debian os? #}
       - libmysqlclient-dev
       - libmysqlclient20
       - mysql-client-5.7
@@ -691,47 +693,87 @@ packages:
       - mysql-server-5.7
       - mysql-server-core-5.7
      {%- endif %}
-     {%- if grains.os_family == "Debian" %}
+     {%- if grains.os_family == 'Debian' %}
       - libradosstriper-dev
      {%- endif %}
   archives:
     wanted:
-      {{ site.gelato_service }}:
-        dest: {{ site.gelato_path }}/{{ site.gelato_service }}
+      api:
+        dest: {{ site.controller_path }}/soda
         options: '--strip-components=1'
         dl:
           format: tar
-          source: {{ site.gelato_uri }}/{{ site.gelato_release }}/opensds-multicloud-{{ site.gelato_release }}-linux-amd64.tar.gz
-          hashsum: {{ site.gelato_hashsum }}
+          source: {{ site.api_uri }}/{{ site.api_release }}/soda-api-{{ site.api_release }}-linux-amd64.tar.gz
+          hashsum: {{ site.api_hashsum }}
 
-      hotpot:
-        dest: {{ site.hotpot_path }}/opensds
+      controller:
+        dest: {{ site.controller_path }}/soda
         options: '--strip-components=1'
         dl:
           format: tar
-          source: {{ site.hotpot_uri }}/{{ site.hotpot_release }}/opensds-hotpot-{{ site.hotpot_release }}-linux-amd64.tar.gz
-          hashsum: {{ site.hotpot_hashsum }}
+          source: {{ site.controller_uri }}/{{ site.controller_release }}/soda-controller-{{ site.controller_release }}-linux-amd64.tar.gz
+          hashsum: {{ site.controller_hashsum }}
+
+      dashboard:
+        dest: {{ site.controller_path }}/soda
+        options: '--strip-components=1'
+        dl:
+          format: tar
+          source: {{ site.dashboard_uri }}/{{ site.dashboard_release }}/soda-dashboard-{{ site.dashboard_release }}-linux-amd64.tar.gz
+          hashsum: {{ site.dashboard_hashsum }}
+
+      delfin:
+        dest: {{ site.controller_path }}/soda
+        options: '--strip-components=1'
+        dl:
+          format: tar
+          source: {{ site.delfin_uri }}/{{ site.delfin_release }}/soda-delfin-{{ site.delfin_release }}-linux-amd64.tar.gz
+          hashsum: {{ site.delfin_hashsum }}
+
+      dock:
+        dest: {{ site.controller_path }}/soda
+        options: '--strip-components=1'
+        dl:
+          format: tar
+          source: {{ site.dock_uri }}/{{ site.dock_release }}/soda-dock-{{ site.dock_release }}-linux-amd64.tar.gz
+          hashsum: {{ site.dock_hashsum }}
+
+      {{ site.multicloud_service }}:
+        dest: {{ site.multicloud_path }}/{{ site.multicloud_service }}
+        options: '--strip-components=1'
+        dl:
+          format: tar
+          source: {{ site.multicloud_uri }}/{{ site.multicloud_release }}/soda-multicloud-{{ site.multicloud_release }}-linux-amd64.tar.gz
+          hashsum: {{ site.multicloud_hashsum }}
 
       nbp:
-        dest: {{ site.sushi_path }}/nbp
+        dest: {{ site.nbp_path }}/nbp
         options: '--strip-components=1'
         dl:
           format: tar
-          source: {{ site.sushi_uri }}/{{ site.sushi_release }}/opensds-sushi-{{ site.sushi_release }}-linux-amd64.tar.gz
-          hashsum: {{ site.sushi_hashsum }}
+          source: {{ site.nbp_uri }}/{{ site.nbp_release }}/soda-nbp-{{ site.nbp_release }}-linux-amd64.tar.gz
+          hashsum: {{ site.nbp_hashsum }}
+
+      orchestration:
+        dest: {{ site.controller_path }}/soda
+        options: '--strip-components=1'
+        dl:
+          format: tar
+          source: {{ site.orchestration_uri }}/{{ site.orchestration_release }}/soda-orchestration-{{ site.orchestration_release }}-linux-amd64.tar.gz
+          hashsum: {{ site.orchestration_hashsum }}
 
       cinder:
-        dest: {{ site.sushi_path }}/cinder
+        dest: {{ site.nbp_path }}/cinder
         options: '--strip-components=1'
         dl:
           format: tar
           source: {{ site.cinder_url }}
           hashsum: {{ site.cinder_hashsum }}
     unwanted:
-      - {{ site.go_path }}/src/github.com/opensds/nbp
-      - {{ site.go_path }}/src/github.com/opensds/opensds
-      - {{ site.sushi_path }}
-      - {{ site.hotpot_path }}
+      - {{ site.go_path }}/src/github.com/soda/nbp
+      - {{ site.go_path }}/src/github.com/soda/api
+      - {{ site.nbp_path }}
+      - {{ site.controller_path }}
       # /var/lib/mysql/
 
 kubernetes:
@@ -773,8 +815,8 @@ salt:
       base:
         - /srv/pillar
   ssh_roster:
-    hotpot1:
-      host: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
+    controller1:
+      host: {{ site.host_ipv4 or site.host_ipv6 or '127.0.0.1' }}
       user: stack
       sudo: True
       priv: /etc/salt/ssh_keys/sshkey.pem
@@ -810,7 +852,7 @@ salt_formulas:
      - devstack-formula
      - golang-formula
      - memcached-formula
-     - opensds-formula
+     - soda-formula
      - mysql-formula
      - timezone-formula
      - resolver-formula

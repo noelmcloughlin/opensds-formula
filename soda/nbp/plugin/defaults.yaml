@@ -1,0 +1,32 @@
+### soda/nbp/defaults.yaml
+# vim: sts=2 ts=2 sw=2 et ai
+
+soda:
+  nbp:
+    plugin:
+      ids:
+        - csi
+        - provisioner
+        - service-broker
+        - cindercompatibleapi
+      custom:
+        provisioner:
+          - deploy/configmap.yaml
+        csi:
+          - deploy/kubernetes/block/csi-configmap-sodaplugin.yaml
+          - deploy/kubernetes/file/csi-configmap-sodaplugin.yaml
+      subdirs:
+        - deploy
+        - charts
+        - examples
+        # server/deploy
+        # server/examples
+      daemon:
+        csi:
+          strategy: config-systemd
+          start: /usr/local/bin/kubectl create -f deploy/kubernetes/file; /usr/local/bin/kubectl create -f deploy/kubernetes/block
+          stop: /usr/local/bin/kubectl delete -f deploy/kubernetes/block; /usr/local/bin/kubectl delete -f deploy/kubernetes/file
+        provisioner:
+          strategy: config-systemd
+          start: /usr/local/bin/kubectl create -f deploy/
+          stop: /usr/local/bin/kubectl delete -f deploy/

@@ -1,10 +1,10 @@
-================
-opensds-formula
-================
+============
+soda-formula
+============
 
-Deploy official releases of OpenSDS (www.opensds.io) using Salt on CENTOS-7, UBUNTU-18, and OPENSUSE-15. This is an experimental solution using repeatable patterns to deploy cloud-native stack using infrastructure as code.  This formula compliments the OpenSDS-Installer_ project.
+Deploy official releases of SodaFoundation (www.sodafoundation.io) using Salt on CENTOS, UBUNTU, and OPENSUSE. It's an experimental solution using repeatable dictionary patterns to deploy cloud-native stack using infrastructure as code.  This formula compliments the SodaFoundation-Installer_ project.
 
-.. _OpenSDS-Installer: https://github.com/sodafoundation/opensds-installer
+.. _SodaFoundation-Installer: https://github.com/sodafoundation/installer
 
 
 .. notes::
@@ -16,7 +16,7 @@ Architectural View
 ===================
 
 .. image:: solutionDesign.png
-   :target: https://github.com/sodafoundation/opensds
+   :target: https://github.com/sodafoundation/api
    :scale: 25 %
    :alt: salt formula high level architecture
 
@@ -26,74 +26,74 @@ Available META states
 .. contents::
     :local:
 
-``opensds``
-------------
+``soda``
+--------
 
-Runs all the other states in the formula. Used by the ``OpenSDS-installer/salt`` module.
+Runs all the other states in the formula. Used by the ``SodaFoundation-installer/salt`` module.
 
-``opensds.infra``
------------------
+``soda.infra``
+--------------
 
 Deploy os profile (PATHS) and environmental dependencies (packages, nginx, docker, etc) via salt.
 
-``opensds.telemetry``
------------------
+``soda.telemetry``
+------------------
 
 Deploy prometheus and grafana via salt.
 
-``opensds.keystone``
+``soda.keystone``
 -----------------
 
-Deploy devstack with keystone configuration for hotpot and gelato.
+Deploy devstack with keystone configuration for controller and multicloud.
 
-``opensds.config``
------------------
+``soda.config``
+---------------
 
-Deploy opensds configuration file
+Deploy Soda configuration file
 
-``opensds.hotpot``
------------------
+``soda.controller``
+-------------------
 
-Deploy opensds hotpot
+Deploy Soda controller
 
-``opensds.auth``
------------------
+``soda.auth``
+-------------
 
 Deploy authentication service (default keystone).
 
-``opensds.database``
+``soda.database``
 -----------------
 
 Deploy database service (default etcd).
 
-``opensds.dock``
------------------
+``soda.dock``
+-------------
 
-Deploy osdsdock service.
+Deploy Dock service.
 
-``opensds.sushi``
------------------
+``soda.nbp``
+------------
 
-Deploy osdsnbp service.
+Deploy north bound plugin service.
 
-``opensds.gelato``
------------------
+``soda.multicloud``
+-------------------
 
-Deploy multi-cloud service.
+Deploy multicloud service.
 
-``opensds.dashboard``
+``soda.dashboard``
 -----------------
 
 Deploy Dashboard service.
 
-``opensds.freespace``
+``soda.freespace``
 -----------------
 
 Free some disk space
 
 
 Site-specific Data Collection
-================
+=============================
 
 The ``site.j2`` and ``pillar.example`` files contain required pillars!
 
@@ -102,4 +102,4 @@ You may review and cautiously update ``site.j2`` to reflect site requirements an
 Prerequisite
 ==============
 
-Prepare your environment by running the ``salt.formulas`` state from ``https://github.com/saltstack-formulas/salt-formula``. See ``pillar.example`` and/or opensds-installer/salt README.
+Prepare your environment by running the ``salt.formulas`` state from ``https://github.com/saltstack-formulas/salt-formula``. See ``pillar.example`` and/or sodafoundation/installer/salt README.

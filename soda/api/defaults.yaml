@@ -1,0 +1,36 @@
+### soda/api/defaults.yaml
+# vim: sts=2 ts=2 sw=2 et ai
+
+soda:
+  api:
+    ids:
+      - soda
+      - api
+    binaries:
+      soda:
+        - osdsapi
+    conf:
+      api:
+        api_endpoint: '0.0.0.0:50050'
+        log_file: /var/log/soda/api.log
+        api_type: provisioner
+        enabled_backends: 'lvm, cinder, ceph, nfs, netapp_ontap_san'
+    container:
+      api:
+        image: sodafoundation/api
+        version: latest
+        privileged: True
+        volumes:
+          - /etc/soda/:/etc/soda
+    daemon:
+      soda:
+        strategy: binaries
+      api:
+        strategy: config-systemd
+        start: /usr/local/bin/osdsapi
+        stop: /usr/bin/killall osdsapi
+        before:
+          - soda-csi
+          - soda-provisioner
+          - soda-cinder
+          - soda-dashboard

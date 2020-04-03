@@ -1,0 +1,105 @@
+### soda/backend/block/defaults.yaml
+# vim: sts=2 ts=2 sw=2 et ai
+
+soda:
+  backend:
+    ids:
+      - sample
+      - cinder
+      - ceph
+      - lvm
+      # dorado
+      - fusionstorage
+      - drbd
+      - nfs
+      - netapp_ontap_san
+
+    conf:
+      sample:
+        name: sample
+        description: Sample Test
+        driver_name: sample
+      drbd:
+        name: drbd
+        description: DRBD Test
+        driver_name: drbd
+        config_path: /etc/soda/driver/drbd.yaml
+      cinder:
+        name: cinder
+        description: Cinder Test
+        driver_name: cinder
+        config_path: /etc/soda/driver/cinder.yaml
+      ceph:
+        name: ceph
+        description: Ceph Test
+        driver_name: ceph
+        config_path: /etc/soda/driver/ceph.yaml
+      lvm:
+        name: lvm
+        description: LVM Test
+        driver_name: lvm
+        config_path: /etc/soda/driver/lvm.yaml
+        host_based_replication_driver: DRBD
+      dorado:
+        name: Huawei Dorado
+        description: dorado Test
+        driver_name: dorado
+        config_path: /etc/soda/driver/huawei_dorado.yaml
+        replication_type: array_based
+      fusionstorage:
+        name: fusionstorage backend
+        description: This is a fusionstorage backend service
+        driver_name: fusionstorage
+        config_path: /etc/soda/driver/fusionstorage.yaml
+      nfs:
+        name: nfs backend
+        description: This is a nfs backend service
+        driver_name: nfs
+        config_path: /etc/soda/driver/nfs.yaml
+      netapp netapp_ontap_san:
+        name: netapp ontap backend
+        description: This is a netapp ontap san backend service
+        driver_name: netapp ontap san
+        config_path: /etc/soda/driver/netapp_ontap_san.yaml
+     
+    drivers:
+      lvm:
+        tgtBindIp: '127.0.0.1'
+      ceph:
+        configFile: /etc/ceph/ceph.conf
+      netapp_ontap_san:
+        username: "username"
+        password: "password"
+        storageDriverName: "ontap-san"
+        managementLIF: "127.0.0.1"
+        dataLIF: "127.0.0.1"
+        svm: "vserver"
+        igroupName: "soda"
+      nfs:
+        tgtBindIp: '127.0.0.1'
+      fusionstorage:
+        authOptions:
+          fmIp: 192.168.0.200
+          fsaIp:
+            - 192.168.0.4
+            - 192.168.0.5
+            - 192.168.0.6
+      drbd:
+        Hosts:
+          - Hostname: rckdeba
+            IP: 10.43.70.115
+            Node-ID: 0
+          - Hostname: rckdebb
+            IP: 10.43.70.116
+            Node-ID: 1
+      cinder:
+        authOptions:
+          #noAuth: true
+          endpoint: http://127.0.0.1/identity
+          #cinderEndpoint: '127.0.0.1:8776/v2'
+          domainId: 'Default'
+          domainName: 'Default'
+          username: 'admin'
+          password: 'admin'
+          tenantName: 'admin'
+          #tenantId: 'myproject'
