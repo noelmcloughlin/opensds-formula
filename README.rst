@@ -69,7 +69,7 @@ Deploy database service (default etcd).
 ``sodafoundation.dock``
 -----------------------
 
-Deploy sdock service.
+Deploy dock service.
 
 ``sodafoundation.sushi``
 ------------------------

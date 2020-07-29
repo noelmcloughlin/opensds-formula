@@ -111,7 +111,7 @@ sodafoundation:
     container:
       dock:
         image: {{ site.container_dock_img }}
-        version: {{ site.dock_version }}
+        version: latest
         ports:
           - {{ site.port_dock }}
           - {{ site.port_dock }}/udp
@@ -192,7 +192,7 @@ sodafoundation:
     container:
       sodafoundation:
         image: {{ site.container_hotpot_img }}
-        version: {{ site.hotpot_version }}
+        version: latest
         ports:
           - {{ site.port_hotpot }}
           - {{ site.port_hotpot }}/udp
@@ -213,14 +213,14 @@ sodafoundation:
     container:
       dashboard:
          image: {{ site.container_dashboard_img }}
-         version: {{ site.dashboard_version }}
+         version: latest
          env:
            OPENSDS_HOST_IP: {{ site.host_ipv4 or site.host_ipv6 or "127.0.0.1" }}
     daemon:
       dashboard:
         strategy: config-container
         repo:
-          branch: {{ site.dashboard_version }}
+          branch: latest
 
   ############### OPENSDS SUSHI NORTH-BOUND-PLUGINS ################
   sushi:
