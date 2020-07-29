@@ -1,16 +1,16 @@
-###  opensds/sushi/init.sls
+###  sodafoundation/sushi/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-   {%- if opensds.deploy_project not in ('gelato',)  %}
+   {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
 include:
   - iscsi.initiator
   - kubernetes.kubectl
-  - opensds.sushi.release
-  - opensds.sushi.repo
-  - opensds.sushi.config
-  - opensds.sushi.plugin
+  - sodafoundation.sushi.release
+  - sodafoundation.sushi.repo
+  - sodafoundation.sushi.config
+  - sodafoundation.sushi.plugin
 
    {%- endif %}

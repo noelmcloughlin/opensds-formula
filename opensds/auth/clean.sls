@@ -1,12 +1,12 @@
-###  opensds/auth/init.sls
+###  sodafoundation/auth/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
+    {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
 include:
-  - opensds.auth.daemon.clean
-  - opensds.auth.config.clean
+  - sodafoundation.auth.daemon.clean
+  - sodafoundation.auth.config.clean
 
     {%- endif %}

@@ -1,21 +1,21 @@
-###  opensds/hotpot/daemon/init.sls
+###  sodafoundation/hotpot/daemon/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-  {%- if opensds.deploy_project not in ('gelato',)  %}
+  {%- if s.deploy_project not in ('gelato',)  %}
 
-{%- from "opensds/map.jinja" import packages, docker, golang with context %}
-{%- from 'opensds/files/macros.j2' import build_source, cp_binaries with context %}
-{%- from 'opensds/files/macros.j2' import workflow, container_run, service_run with context %}
+{%- from "sodafoundation/map.jinja" import packages, docker, golang with context %}
+{%- from 'sodafoundation/files/macros.j2' import build_source, cp_binaries with context %}
+{%- from 'sodafoundation/files/macros.j2' import workflow, container_run, service_run with context %}
 
 include:
-  - opensds.hotpot.config
+  - s.hotpot.config
 
-      {%- for id in opensds.hotpot.ids %}
-          {% if 'daemon' in opensds.hotpot and id in opensds.hotpot.daemon and opensds.hotpot.daemon[id] is mapping %}
+      {%- for id in s.hotpot.ids %}
+          {% if 'daemon' in s.hotpot and id in s.hotpot.daemon and s.hotpot.daemon[id] is mapping %}
 
-{{ workflow('opensds', 'hotpot daemon', id, opensds.hotpot, opensds.dir.hotpot, opensds, golang) }}
+{{ workflow('sodafoundation', 'hotpot daemon', id, s.hotpot, s.dir.hotpot, sodafoundation, golang) }}
 
           {%- endif %}
       {%- endfor %}

@@ -1,12 +1,12 @@
-### opensds/sushi/plugin/init.sls
+### sodafoundation/sushi/plugin/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-   {%- if opensds.deploy_project not in ('gelato',)  %}
+   {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
 include:
-  - opensds.sushi.plugin.config
-  - opensds.sushi.plugin.daemon
+  - sodafoundation.sushi.plugin.config
+  - sodafoundation.sushi.plugin.daemon
 
    {%- endif %}

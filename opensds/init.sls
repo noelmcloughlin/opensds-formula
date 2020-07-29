@@ -1,16 +1,16 @@
-### opensds/init.sls
+### sodafoundation/init.sls
 
 include:
-  - opensds.infra
-  - opensds.telemetry
-  - opensds.keystone
-  - opensds.config
-  - opensds.database
-  - opensds.auth
-  - opensds.hotpot
-  - opensds.sushi
-  - opensds.backend
-  - opensds.dock
-  - opensds.dashboard
-  - opensds.gelato
-  - opensds.freespace
+  - sodafoundation.infra
+  - sodafoundation.telemetry
+  - sodafoundation.keystone
+  - sodafoundation.config
+  - sodafoundation.database
+  - sodafoundation.auth
+  - sodafoundation.hotpot
+  - sodafoundation.sushi
+  - sodafoundation.backend
+  - sodafoundation.dock
+  - sodafoundation.dashboard
+  - sodafoundation.gelato
+  - sodafoundation.freespace

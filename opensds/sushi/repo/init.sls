@@ -1,19 +1,19 @@
-###  opensds/sushi/repo/init.sls
+###  sodafoundation/sushi/repo/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-  {%- if opensds.deploy_project not in ('gelato',)  %}
+  {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
-{%- from "opensds/map.jinja" import golang with context %}
-{%- from 'opensds/files/macros.j2' import repo_download with context %}
+{%- from "sodafoundation/map.jinja" import golang with context %}
+{%- from 'sodafoundation/files/macros.j2' import repo_download with context %}
 
-      {%- for id in opensds.sushi.ids %}
-          {%- if 'daemon' in opensds.sushi and id in opensds.sushi.daemon %}
-              {%- set daemon = opensds.sushi.daemon[ id ] %}
+      {%- for id in sodafoundation.sushi.ids %}
+          {%- if 'daemon' in sodafoundation.sushi and id in sodafoundation.sushi.daemon %}
+              {%- set daemon = sodafoundation.sushi.daemon[ id ] %}
               {%- if daemon is mapping and 'repo' in daemon.strategy|lower %}
 
-{{ repo_download('opensds', 'sushi repo', id, daemon, golang.go_path + '/src/github.com/opensds') }}
+{{ repo_download('sodafoundation', 'sushi repo', id, daemon, golang.go_path + '/src/github.com/sodafoundation') }}
 
               {%- endif %}
           {%- endif %}

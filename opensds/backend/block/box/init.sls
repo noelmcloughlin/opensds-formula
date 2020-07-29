@@ -1,11 +1,11 @@
-###  opensds/backend/block/box/init.sls
+###  sodafoundation/backend/block/box/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
+    {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
 include:
-  - opensds.backend.block.box.install
+  - sodafoundation.backend.block.box.install
 
     {%- endif %}

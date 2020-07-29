@@ -1,14 +1,14 @@
 #########################################################
 # File managed by Salt. Changes risk being overwritten.
 #########################################################
-{%- from 'opensds/files/macros.j2' import getlist with context %}
+{%- from 'sodafoundation/files/macros.j2' import getlist with context %}
 [Unit]
 Description=OpenSDS {{ svc }} service
 {%- if before is defined and before %}
 Before={{ getlist(before, False, '.service ') }}
 {%- endif %}
 After=network.target docker.target
-Documentation=https://opensds.io
+Documentation=https://sodafoundation.io
 
 [Service]
 WorkingDirectory={{ workdir }}

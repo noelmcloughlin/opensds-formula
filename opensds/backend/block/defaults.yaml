@@ -1,7 +1,7 @@
-### opensds/backend/block/defaults.yaml
+### sodafoundation/backend/block/defaults.yaml
 # vim: sts=2 ts=2 sw=2 et ai
 
-opensds:
+sodafoundation:
   backend:
     block:
       ids:

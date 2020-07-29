@@ -1,10 +1,10 @@
-### opensds/gelato/defaults.yaml
+### sodafoundation/gelato/defaults.yaml
 # vim: sts=2 ts=2 sw=2 et ai
 
-opensds:
+sodafoundation:
   gelato:
     release: v1
-    service: multicloud    # or opensds ?
+    service: multicloud    # or sodafoundation ?
     ids:
       - multi-cloud
     binaries:
@@ -16,7 +16,7 @@ opensds:
         - s3
         - examples
         - tidb_data
-    opensdsconf:
+    conf:
       multi-cloud:
         endpoint: 127.0.0.1
         port: 8089

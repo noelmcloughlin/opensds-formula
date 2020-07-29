@@ -1,18 +1,18 @@
-# opensds/hotpot/config/clean.sls
+# sodafoundation/hotpot/config/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',) %}
+    {%- if s.deploy_project not in ('gelato',) %}
 
-{%- from 'opensds/files/macros.j2' import cleanup_files, cleanup_config with context %}
-{%- from "opensds/map.jinja" import golang, packages with context %}
+{%- from 'sodafoundation/files/macros.j2' import cleanup_files, cleanup_config with context %}
+{%- from "sodafoundation/map.jinja" import golang, packages with context %}
 
-        {%- for id in opensds.hotpot.ids %}
-            {%- if "opensdsconf" in opensds.hotpot and id in opensds.hotpot.opensdsconf and opensds.hotpot.opensdsconf[id] is mapping %}
+        {%- for id in s.hotpot.ids %}
+            {%- if "conf" in s.hotpot and id in s.hotpot.conf and s.hotpot.conf[id] is mapping %}
 
-{{ cleanup_config('opensds', 'hotpot config', id, opensds.conf) }}
-{{ cleanup_files('opensds', 'hotpot config', id, opensds.dir.hotpot) }}
+{{ cleanup_config('sodafoundation', 'hotpot config', id, s.conf) }}
+{{ cleanup_files('sodafoundation', 'hotpot config', id, s.dir.hotpot) }}
 
             {%- endif %}
         {%- endfor %}

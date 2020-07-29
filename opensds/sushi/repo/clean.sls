@@ -1,14 +1,14 @@
-###  opensds/sushi/repo/clean.sls
+###  sodafoundation/sushi/repo/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
-        {%- for id in opensds.sushi.ids %}
+    {%- if sodafoundation.deploy_project not in ('gelato',)  %}
+        {%- for id in sodafoundation.sushi.ids %}
 
-opensds sushi repo {{ id }} ensure directory removed:
+sodafoundation sushi repo {{ id }} ensure directory removed:
   file.absent:
-    - name: {{ opensds.dir.sushi }}/{{ id }}
+    - name: {{ sodafoundation.dir.sushi }}/{{ id }}
 
         {%- endfor %}
     {%- endif %}

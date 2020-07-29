@@ -1,16 +1,16 @@
-### opensds/database/defaults.yaml
+### sodafoundation/database/defaults.yaml
 # vim: sts=2 ts=2 sw=2 et ai
 
-opensds:
+sodafoundation:
   database:
     ids:
       - database
       - etcd
-    opensdsconf:
+    conf:
       database:
         driver: etcd
         endpoint: '127.0.0.1:2379,http://127.0.0.1:2380'
-        credential: 'opensds:password@127.0.0.1:3306/dbname'
+        credential: 'sodafoundation:password@127.0.0.1:3306/dbname'
     container:
       etcd:
     daemon:

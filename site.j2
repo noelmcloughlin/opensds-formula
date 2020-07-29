@@ -29,7 +29,7 @@
       'timezone': 'America/Denver',
 
       'enabled_backends': 'lvm, cinder, ceph, nfs, netapp_ontap_san',
-      'lvm_poolname': 'opensds-volumes',
+      'lvm_poolname': 'sodafoundation-volumes',
       'ceph_poolname': 'ceph-volumes',
       'cinder_poolname': 'cinder-volumes',
       'dorado_poolname': 'dorado-volumes',
@@ -43,9 +43,9 @@
       'gelato_uri': 'https://github.com/sodafoundation/multi-cloud/releases/download',
 
       'hotpot_release': 'v0.10.1',
-      'hotpot_service': 'opensds',
+      'hotpot_service': 'sodafoundation',
       'hotpot_hashsum': 'ee53570846690ef660121079299992096545178816625eceaed3a0c9559f72e8',
-      'hotpot_uri': 'https://github.com/sodafoundation/opensds/releases/download',
+      'hotpot_uri': 'https://github.com/sodafoundation/sodafoundation/releases/download',
 
       'sushi_release': 'v0.10.0',
       'sushi_hashsum': 'ff1d1fd0d065afefcd499d5be25780a8fa5f8eaac3f7536720b54139ed1fa5e9',
@@ -55,9 +55,9 @@
       'cinder_hashsum': 'f0b2ebe65af831015ef45cf9ce859fac707e0cc0cfe045d179d6c6d580130e43',
       'cinder_url': 'https://github.com/openstack/cinder/archive/15.0.1.tar.gz',
 
-      'container_hotpot_img': 'opensdsio/opensds-controller',
-      'container_dock_img': 'opensdsio/opensds-dock',
-      'container_dashboard_img': 'opensdsio/dashboard',
+      'container_hotpot_img': 'sodafoundationio/sodafoundation-controller',
+      'container_dock_img': 'sodafoundationio/sodafoundation-dock',
+      'container_dashboard_img': 'sodafoundationio/dashboard',
       'container_etcd_img': 'quay.io/coreos/etcd',
       'container_cinder_img': 'openstack/cinder-blockbox',
 
@@ -68,16 +68,16 @@
       'cinder_version': 'stable/rocky',
 
       'devstack_enabled_services': 'mysql,key',
-      'devstack_password': 'opensds@123',
+      'devstack_password': 'sodafoundation@123',
       'project_domain_name': 'Default',
       'project_name': 'service',
       'user_domain_name': 'Default',
 
-      'devstack_path': '/opt/opensds-linux-amd64-devstack',
-      'hotpot_path': '/opt/opensds-linux-amd64',
-      'devstack_path': '/opt/opensds-linux-amd64-devstack',
-      'gelato_path': '/opt/opensds-gelato-linux-amd64',
-      'sushi_path': '/opt/opensds-sushi-linux-amd64',
+      'devstack_path': '/opt/sodafoundation-linux-amd64-devstack',
+      'hotpot_path': '/opt/sodafoundation-linux-amd64',
+      'devstack_path': '/opt/sodafoundation-linux-amd64-devstack',
+      'gelato_path': '/opt/sodafoundation-gelato-linux-amd64',
+      'sushi_path': '/opt/sodafoundation-sushi-linux-amd64',
       'go_prefix': '/usr/local',
       'go_root': '/usr/local/go',
       'go_path': '/usr/local/golang/packages',

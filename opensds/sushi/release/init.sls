@@ -1,4 +1,4 @@
-###  opensds/sushi/release/init.sls
+###  sodafoundation/sushi/release/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 

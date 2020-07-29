@@ -1,20 +1,20 @@
-###  opensds/backend/block/release/clean.sls
+###  sodafoundation/backend/block/release/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-  {%- if opensds.deploy_project not in ('gelato',)  %}
-      {%- if opensds.backend.block.ids is iterable and opensds.backend.block.ids is string %}
-          {%- set backends = opensds.backend.block.ids.split(', ') %}
+  {%- if s.deploy_project not in ('gelato',)  %}
+      {%- if s.backend.block.ids is iterable and s.backend.block.ids is string %}
+          {%- set backends = s.backend.block.ids.split(', ') %}
       {%- else %}
-          {%- set backends = opensds.backend.block.ids %}
+          {%- set backends = s.backend.block.ids %}
       {%- endif %}
       {%- for id in backends %}
-          {%- if id in opensds.backend.block.daemon and "release" in opensds.backend.block.daemon[id]['strategy']%} 
+          {%- if id in s.backend.block.daemon and "release" in s.backend.block.daemon[id]['strategy']%} 
 
-opensds backend block release {{ id }} download directory clean:
+sodafoundation backend block release {{ id }} download directory clean:
   file.absent:
-    - name: {{ opensds.dir.sushi }}/{{ id }}
+    - name: {{ s.dir.sushi }}/{{ id }}
 
           {%- endif %}
       {%- endfor %}

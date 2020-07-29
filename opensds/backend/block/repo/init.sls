@@ -1,24 +1,24 @@
-###  opensds/backend/block/repo/init.sls
+###  sodafoundation/backend/block/repo/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-  {%- if opensds.deploy_project not in ('gelato',)  %}
+  {%- if s.deploy_project not in ('gelato',)  %}
 
-{%- from "opensds/map.jinja" import golang with context %}
-{%- from 'opensds/files/macros.j2' import repo_download with context %}
+{%- from "sodafoundation/map.jinja" import golang with context %}
+{%- from 'sodafoundation/files/macros.j2' import repo_download with context %}
 
-      {%- if opensds.backend.block.ids is iterable and opensds.backend.block.ids is string %}
-          {%- set backends = opensds.backend.block.ids.split(', ') %}
+      {%- if s.backend.block.ids is iterable and s.backend.block.ids is string %}
+          {%- set backends = s.backend.block.ids.split(', ') %}
       {%- else %}
-          {%- set backends = opensds.backend.block.ids %}
+          {%- set backends = s.backend.block.ids %}
       {%- endif %}
       {%- for id in backends %}
-          {%- if 'daemon' in opensds.backend.block and id in opensds.backend.block.daemon %}
-              {%- set daemon = opensds.backend.block.daemon[ id ] %}
+          {%- if 'daemon' in s.backend.block and id in s.backend.block.daemon %}
+              {%- set daemon = s.backend.block.daemon[ id ] %}
               {%- if daemon is mapping and 'repo' in daemon.strategy|lower %}
 
-{{ repo_download('opensds', 'backend block repo', id, daemon, opensds.dir.sushi) }}
+{{ repo_download('sodafoundation', 'backend block repo', id, daemon, s.dir.sushi) }}
 
               {%- endif %}
           {%- endif %}

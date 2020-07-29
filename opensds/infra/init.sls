@@ -1,7 +1,7 @@
-###  opensds/infra/init.sls
+###  sodafoundation/infra/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
 include:
   {{ '- epel' if grains.os_family in ('RedHat',) else '' }}
@@ -21,9 +21,9 @@ include:
   - nginx       ### manages port 8088 (daemon or container)
 
 
-    {%- if opensds.pkgs and opensds.pkgs is iterable and opensds.pkgs is not string %}
-        {%- for p in opensds.pkgs %}
-opensds infra pkgs install {{ p }}:
+    {%- if sodafoundation.pkgs and sodafoundation.pkgs is iterable and sodafoundation.pkgs is not string %}
+        {%- for p in sodafoundation.pkgs %}
+sodafoundation infra pkgs install {{ p }}:
   pkg.installed:
     - name: {{ p }}
         {%- endfor %}

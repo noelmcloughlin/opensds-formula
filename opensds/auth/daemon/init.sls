@@ -1,13 +1,13 @@
-###  opensds/auth/daemon/init.sls
+###  sodafoundation/auth/daemon/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
+    {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
 include:
-  - opensds.auth.config
-        {%- if "keystone" in opensds.hotpot.opensdsconf.osdslet.auth_strategy|lower %}
+  - sodafoundation.auth.config
+        {%- if "keystone" in sodafoundation.hotpot.conf.let.auth_strategy|lower %}
   - devstack.cli
         {%- endif %}
 

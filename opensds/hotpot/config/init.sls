@@ -1,20 +1,20 @@
-# opensds/hotpot/config/init.sls
+# sodafoundation/hotpot/config/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',) %}
-{%- from 'opensds/files/macros.j2' import update_config with context %}
+    {%- if s.deploy_project not in ('gelato',) %}
+{%- from 'sodafoundation/files/macros.j2' import update_config with context %}
 
 include:
-  - opensds.config
+  - s.config
 
-        {%- for id in opensds.hotpot.ids %}
-            {%- if 'opensdsconf' in opensds.hotpot and id in opensds.hotpot.opensdsconf %}
-                {%- set config = opensds.hotpot.opensdsconf[id] %}
+        {%- for id in s.hotpot.ids %}
+            {%- if 'conf' in s.hotpot and id in s.hotpot.conf %}
+                {%- set config = s.hotpot.conf[id] %}
                 {%- if config is mapping %}
 
-{{ update_config('opensds','hotpot config', id, config, opensds.conf) }}
+{{ update_config('sodafoundation','hotpot config', id, config, s.conf) }}
 
                 {%- endif %}
             {%- endif %}

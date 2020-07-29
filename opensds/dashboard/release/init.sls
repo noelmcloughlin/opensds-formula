@@ -1,4 +1,4 @@
-###  opensds/dashboard/release/init.sls
+###  sodafoundation/dashboard/release/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 

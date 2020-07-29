@@ -1,28 +1,28 @@
-### opensds/hotpot/defaults.yaml
+### sodafoundation/hotpot/defaults.yaml
 # vim: sts=2 ts=2 sw=2 et ai
 
-opensds:
+sodafoundation:
   hotpot:
     release: v1beta
-    service: opensds
+    service: sodafoundation
     ids:
-      - opensds
-      - osdslet
+      - sodafoundation
+      - let
     binaries:
-      opensds:
-        - osdslet
-        - osdsctl
-        - osdsdock
-    opensdsconf:
-      osdslet:
+      sodafoundation:
+        - let
+        - ctl
+        - dock
+    conf:
+      let:
         api_endpoint: '127.0.0.1:50040'
         graceful: True
-        log_file: /var/log/opensds/osdslet.log
+        log_file: /var/log/sodafoundation/let.log
         socket_order: inc
         auth_strategy: keystone
     container:
-      opensds:
-        image: opensdsio/opensds-hotpot
+      sodafoundation:
+        image: sodafoundationio/sodafoundation-hotpot
         version: stable/bali
         ports:
           - 50040
@@ -30,14 +30,14 @@ opensds:
         port_bindings:
           - '127.0.0.1:50040:50040'
         volumes:
-          - '/etc/opensds/:/etc/opensds'
+          - '/etc/sodafoundation/:/etc/sodafoundation'
     daemon:
-      opensds:
+      sodafoundation:
         strategy: repo-config-build-binaries-systemd
         endpoint_ipv4: 127.0.0.1
         endpoint_port: 50040
         repo:
-          url: https://github.com/sodafoundation/opensds.git
+          url: https://github.com/sodafoundation/sodafoundation.git
           branch: stable/bali
           build_cmd: make
           build_subdir: ''
@@ -46,8 +46,8 @@ opensds:
         start: /usr/local/bin/osdslet
         stop: /usr/bin/killall osdslet
         before:
-          - opensds-csi
-          - opensds-provisioner
-          - opensds-osdsdock
-          - opensds-cinder
-          - opensds-dashboard
+          - sodafoundation-csi
+          - sodafoundation-provisioner
+          - sodafoundation-dock
+          - sodafoundation-cinder
+          - sodafoundation-dashboard

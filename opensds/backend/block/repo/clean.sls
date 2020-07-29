@@ -1,19 +1,19 @@
-###  opensds/backend/block/repo/clean.sls
+###  sodafoundation/backend/block/repo/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-  {%- if opensds.deploy_project not in ('gelato',)  %}
-      {%- if opensds.backend.block.ids is iterable and opensds.backend.block.ids is string %}
-          {%- set backends = opensds.backend.block.ids.split(', ') %}
+  {%- if s.deploy_project not in ('gelato',)  %}
+      {%- if s.backend.block.ids is iterable and s.backend.block.ids is string %}
+          {%- set backends = s.backend.block.ids.split(', ') %}
       {%- else %}
-          {%- set backends = opensds.backend.block.ids %}
+          {%- set backends = s.backend.block.ids %}
       {%- endif %}
       {%- for id in backends %}
 
-opensds backend block repo {{ id }} ensure directory removed:
+sodafoundation backend block repo {{ id }} ensure directory removed:
   file.absent:
-    - name: {{ opensds.dir.sushi + '/' + id }}
+    - name: {{ s.dir.sushi + '/' + id }}
 
       {%- endfor %}
   {%- endif %}

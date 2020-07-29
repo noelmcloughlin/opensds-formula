@@ -1,14 +1,14 @@
-###  opensds/dashboard/init.sls
+###  sodafoundation/dashboard/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
+    {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
 include:
-  - opensds.dashboard.daemon.clean
-  - opensds.dashboard.release.clean
-  - opensds.dashboard.repo.clean
-  - opensds.dashboard.config.clean
+  - sodafoundation.dashboard.daemon.clean
+  - sodafoundation.dashboard.release.clean
+  - sodafoundation.dashboard.repo.clean
+  - sodafoundation.dashboard.config.clean
 
     {%- endif %}

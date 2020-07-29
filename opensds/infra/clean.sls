@@ -1,7 +1,7 @@
-### opensds/infra/clean.sls
+### sodafoundation/infra/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
 include:
   - golang.clean
@@ -10,14 +10,14 @@ include:
   - apache.uninstall      ### manages port 80
   # nginx.clean           ### https://github.com/saltstack-formulas/nginx-formula/issues/214
 
-   {%- if opensds.pkgs %}
+   {%- if sodafoundation.pkgs %}
 
-opensds infra required packages purged:
+sodafoundation infra required packages purged:
   pkg.purged:
-    - names: {{ opensds.pkgs }}
+    - names: {{ sodafoundation.pkgs }}
 
   {%- endif %}
 
-opensds infra profile absent:
+sodafoundation infra profile absent:
   file.absent:
-    - name: /etc/profile.d/opensds.sh
+    - name: /etc/profile.d/sodafoundation.sh

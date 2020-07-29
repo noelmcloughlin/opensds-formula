@@ -1,14 +1,14 @@
-###  opensds/dashboard/repo/clean.sls
+###  sodafoundation/dashboard/repo/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
-        {%- for id in opensds.dashboard.ids %}
+    {%- if sodafoundation.deploy_project not in ('gelato',)  %}
+        {%- for id in sodafoundation.dashboard.ids %}
 
-opensds dashboard repo {{ id }} ensure directory removed:
+sodafoundation dashboard repo {{ id }} ensure directory removed:
   file.absent:
-    - name: {{ opensds.dir.dashboard + '/' + id }}
+    - name: {{ sodafoundation.dir.dashboard + '/' + id }}
 
         {%- endfor %}
     {%- endif %}

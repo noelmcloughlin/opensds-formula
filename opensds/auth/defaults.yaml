@@ -1,28 +1,28 @@
-### opensds/auth/defaults.yaml
+### sodafoundation/auth/defaults.yaml
 # vim: sts=2 ts=2 sw=2 et ai
 
-opensds:
+sodafoundation:
   auth:
     ids:
-      - osdsauth
+      - auth
       - keystone_authtoken
 
-    opensdsconf:
+    conf:
       keystone_authtoken:
         memcached_servers: '127.0.0.1:11211'
         auth_uri: 'http://127.0.0.1/identity'
         auth_url: 'http://127.0.0.1/identity'
-        signing_dir: /var/cache/opensds
+        signing_dir: /var/cache/sodafoundation
         cafile: /opt/stack/data/ca-bundle.pem
         project_domain_name: Default
         project_name: service
         user_domain_name: Default
         auth_type: password
-        username: opensds
-        password: 'opensds@123'
+        username: sodafoundation
+        password: 'sodafoundation@123'
 
     daemon:
-      osdsauth:
-        strategy: config-keystone   # verified on Ubuntu opensds-installer/salt
+      auth:
+        strategy: config-keystone   # verified on Ubuntu sodafoundation-installer/salt
         endpoint_ipv4: '127.0.0.1'
         endpoint_port: '50040'

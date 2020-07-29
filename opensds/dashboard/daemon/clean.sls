@@ -1,19 +1,19 @@
-###  opensds/dashboard/daemon/clean.sls
+###  sodafoundation/dashboard/daemon/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
-{%- from 'opensds/files/macros.j2' import daemon_clean with context %}
-{%- from "opensds/map.jinja" import golang, packages with context %}
+    {%- if s.deploy_project not in ('gelato',)  %}
+{%- from 'sodafoundation/files/macros.j2' import daemon_clean with context %}
+{%- from "sodafoundation/map.jinja" import golang, packages with context %}
 
-        {%- for id in opensds.dashboard.ids %}
-            {%- if 'daemon' in opensds.dashboard and id in opensds.dashboard.daemon and opensds.dashboard.daemon[ id ] is mapping %}
+        {%- for id in s.dashboard.ids %}
+            {%- if 'daemon' in s.dashboard and id in s.dashboard.daemon and s.dashboard.daemon[ id ] is mapping %}
 
-{{ daemon_clean('opensds', 'dashboard daemon', id, opensds.dashboard, opensds.systemd) }}
+{{ daemon_clean('sodafoundation', 'dashboard daemon', id, s.dashboard, s.systemd) }}
 
-                    {%- if 'build' in opensds.dashboard.daemon[id]['strategy']|lower %}
-opensds dashboard config {{ id }} clean angular cli:
+                    {%- if 'build' in s.dashboard.daemon[id]['strategy']|lower %}
+sodafoundation dashboard config {{ id }} clean angular cli:
   cmd.run:
     - name: npm uninstall -g @angular/cli
     - env:

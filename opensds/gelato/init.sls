@@ -1,14 +1,14 @@
-###  opensds/gelato/init.sls
+###  sodafoundation/gelato/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-   {%- if opensds.deploy_project not in ('hotpot',)  %}
+   {%- if sodafoundation.deploy_project not in ('hotpot',)  %}
 
 include:
-  - opensds.gelato.release
-  - opensds.gelato.repo
-  - opensds.gelato.config
-  - opensds.gelato.daemon
+  - sodafoundation.gelato.release
+  - sodafoundation.gelato.repo
+  - sodafoundation.gelato.config
+  - sodafoundation.gelato.daemon
 
    {%- endif %}

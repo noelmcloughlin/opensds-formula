@@ -1,14 +1,14 @@
-###  opensds/hotpot/init.sls
+###  sodafoundation/hotpot/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
+    {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
 include:
-  - opensds.hotpot.daemon.clean
-  - opensds.hotpot.release.clean
-  - opensds.hotpot.repo.clean
-  - opensds.hotpot.config.clean
+  - sodafoundation.hotpot.daemon.clean
+  - sodafoundation.hotpot.release.clean
+  - sodafoundation.hotpot.repo.clean
+  - sodafoundation.hotpot.config.clean
 
     {%- endif %}

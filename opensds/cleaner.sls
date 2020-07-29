@@ -1,16 +1,16 @@
-### opensds/cleaner.sls
+### sodafoundation/cleaner.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
 include:
-  - opensds.auth.clean
-  - opensds.dashboard.clean
-  - opensds.dock.clean
-  - opensds.database.clean
-  - opensds.sushi.clean
-  - opensds.gelato.clean
-  - opensds.hotpot.clean
-  - opensds.backend.clean
-  - opensds.telemetry.clean
-  - opensds.infra.clean
-  - opensds.freespace
+  - sodafoundation.auth.clean
+  - sodafoundation.dashboard.clean
+  - sodafoundation.dock.clean
+  - sodafoundation.database.clean
+  - sodafoundation.sushi.clean
+  - sodafoundation.gelato.clean
+  - sodafoundation.hotpot.clean
+  - sodafoundation.backend.clean
+  - sodafoundation.telemetry.clean
+  - sodafoundation.infra.clean
+  - sodafoundation.freespace

@@ -1,7 +1,7 @@
-### opensds/telemetry/clean.sls
+### sodafoundation/telemetry/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
 include:
   - prometheus.clean

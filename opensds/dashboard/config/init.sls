@@ -1,22 +1,22 @@
-# opensds/dashboard/config/init.sls
+# sodafoundation/dashboard/config/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',) %}
+    {%- if s.deploy_project not in ('gelato',) %}
 
-{%- from "opensds/map.jinja" import golang with context %}
-{%- from 'opensds/files/macros.j2' import update_config with context %}
+{%- from "sodafoundation/map.jinja" import golang with context %}
+{%- from 'sodafoundation/files/macros.j2' import update_config with context %}
 
 include:
-  - opensds.config
+  - s.config
 
-       {%- for id in opensds.dashboard.ids %}
-           {%- if 'opensdsconf' in opensds.dashboard and id in opensds.dashboard.opensdsconf %}
-               {%- set config = opensds.dashboard.opensdsconf[id] %}
+       {%- for id in s.dashboard.ids %}
+           {%- if 'conf' in s.dashboard and id in s.dashboard.conf %}
+               {%- set config = s.dashboard.conf[id] %}
                {%- if config is mapping %}
 
-{{ update_config('opensds','dashboard config', id, config, opensds.conf) }}
+{{ update_config('sodafoundation','dashboard config', id, config, s.conf) }}
 
                {%- endif %}
            {%- endif %}

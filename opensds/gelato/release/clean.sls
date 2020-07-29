@@ -1,15 +1,15 @@
-###  opensds/gelato/release/clean.sls
+###  sodafoundation/gelato/release/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-   {%- if opensds.deploy_project not in ('hotpot',)  %}
-       {%- for id in opensds.gelato.ids %}
-           {%- if id in opensds.gelato.daemon and 'release' in opensds.gelato.daemon[id]['strategy']|lower %} 
+   {%- if s.deploy_project not in ('hotpot',)  %}
+       {%- for id in s.gelato.ids %}
+           {%- if id in s.gelato.daemon and 'release' in s.gelato.daemon[id]['strategy']|lower %} 
 
-opensds gelato release {{ id }} download directory clean:
+sodafoundation gelato release {{ id }} download directory clean:
   file.absent:
-    - name: {{ opensds.dir.gelato }}/{{ id }}
+    - name: {{ s.dir.gelato }}/{{ id }}
 
            {%- endif %}
        {%- endfor %}

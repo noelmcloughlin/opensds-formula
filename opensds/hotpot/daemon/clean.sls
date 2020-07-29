@@ -1,18 +1,18 @@
-###  opensds/hotpot/daemon/clean.sls
+###  sodafoundation/hotpot/daemon/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
+    {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
-{%- from 'opensds/files/macros.j2' import daemon_clean with context %}
-{%- from "opensds/map.jinja" import golang, packages with context %}
+{%- from 'sodafoundation/files/macros.j2' import daemon_clean with context %}
+{%- from "sodafoundation/map.jinja" import golang, packages with context %}
 
-        {%- for id in opensds.hotpot.ids %}
-            {%- if 'daemon' in opensds.hotpot and id in opensds.hotpot.daemon  %}
-                {%- if opensds.hotpot.daemon[id] is mapping %}
+        {%- for id in sodafoundation.hotpot.ids %}
+            {%- if 'daemon' in sodafoundation.hotpot and id in sodafoundation.hotpot.daemon  %}
+                {%- if sodafoundation.hotpot.daemon[id] is mapping %}
 
-{{ daemon_clean('opensds', 'hotpot daemon', id, opensds.hotpot, opensds.systemd) }}
+{{ daemon_clean('sodafoundation', 'hotpot daemon', id, sodafoundation.hotpot, sodafoundation.systemd) }}
 
                 {%- endif %}
             {%- endif %}

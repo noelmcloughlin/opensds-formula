@@ -1,31 +1,32 @@
-###  opensds/config.sls
+###  sodafoundation/config.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds, golang, devstack, packages with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation, golang, devstack, packages with context %}
 
-opensds infra base directories created:
+sodafoundation infra base directories created:
   file.directory:
     - names:
-      - {{ opensds.dir.sushi }}/nbp/provisioner  # https://github.com/sodafoundation/opensds-installer/issues/110
-      {%- for k, v in opensds.dir.items() %}
+      # https://github.com/sodafoundation/sodafoundation-installer/issues/110
+      - {{ sodafoundation.dir.sushi }}/nbp/provisioner
+      {%- for k, v in sodafoundation.dir.items() %}
       - {{ v }}
       {%- endfor %}
     - makedirs: True
     - force: True
-    - user: {{ opensds.user or 'root' }}
-    - dir_mode: {{ opensds.dir_mode or '0755' }}
+    - user: {{ sodafoundation.user or 'root' }}
+    - dir_mode: {{ sodafoundation.dir_mode or '0755' }}
 
-opensds config ensure opensds conf exists:
+sodafoundation config ensure sodafoundation conf exists:
   file.managed:
-   - name: {{ opensds.conf }}
+   - name: {{ sodafoundation.conf }}
    - makedirs: True
    - replace: False
    - user: root
-   - mode: {{ opensds.file_mode or '0644' }}
+   - mode: {{ sodafoundation.file_mode or '0644' }}
 
      {%- if grains.os_family not in ('FreeBSD',) %}
 
-opensds config ensure docker running:
+sodafoundation config ensure docker running:
   service.running:
     - name: docker
     - enable: True
@@ -35,24 +36,24 @@ opensds config ensure docker running:
      {%- endif %}
 
 ### sdsrc
-opensds config sdsrc file generated:
+sodafoundation config sdsrc file generated:
   file.managed:
-    - name: {{ opensds.dir.hotpot }}/sdsrc
-    - source: salt://opensds/files/sdsrc.j2
+    - name: {{ sodafoundation.dir.hotpot }}/sdsrc
+    - source: salt://sodafoundation/files/sdsrc.j2
     - makedirs: True
     - template: jinja
-    - user: {{ opensds.user or 'root' }}
-    - mode: {{ opensds.file_mode or '0644' }}
+    - user: {{ sodafoundation.user or 'root' }}
+    - mode: {{ sodafoundation.file_mode or '0644' }}
     - context:
       golang: {{ golang|json }}
       devstack: {{ devstack|json }}
-      opensds: {{ opensds|json }}
+      sodafoundation: {{ sodafoundation|json }}
 
 ### profile
-opensds infra system profile present:
+sodafoundation infra system profile present:
   file.managed:
-    - name: /etc/profile.d/opensds.sh
-    - source: salt://opensds/files/profile.j2
+    - name: /etc/profile.d/sodafoundation.sh
+    - source: salt://sodafoundation/files/profile.j2
     - template: jinja
     - mode: 644
     - user: root
@@ -60,4 +61,4 @@ opensds infra system profile present:
     - onlyif: test -f {{ golang.go_path }}/bin/go
     - context:
       golanghome: {{ golang.go_path }}
-      sdshome: {{ opensds.dir.hotpot }}
+      sdshome: {{ sodafoundation.dir.hotpot }}

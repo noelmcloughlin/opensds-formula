@@ -1,16 +1,16 @@
-# opensds/database/config/clean.sls
+# sodafoundation/database/config/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',) %}
-{%- from 'opensds/files/macros.j2' import cleanup_config with context %}
-{%- from "opensds/map.jinja" import golang, packages with context %}
+    {%- if sodafoundation.deploy_project not in ('gelato',) %}
+{%- from 'sodafoundation/files/macros.j2' import cleanup_config with context %}
+{%- from "sodafoundation/map.jinja" import golang, packages with context %}
 
-        {%- for id in opensds.database.ids %}
-            {%- if "opensdsconf" in opensds.database and id in opensds.database.opensdsconf %}
+        {%- for id in sodafoundation.database.ids %}
+            {%- if "conf" in sodafoundation.database and id in sodafoundation.database.conf %}
 
-{{ cleanup_config('opensds', 'database config', id, opensds.conf)}}
+{{ cleanup_config('sodafoundation', 'database config', id, sodafoundation.conf)}}
 
             {%- endif %}
         {%- endfor %}

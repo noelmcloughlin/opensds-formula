@@ -15,16 +15,16 @@
 tgtBindIp: 127.0.0.1 # change tgtBindIp to your real host ip, run 'ifconfig' to check
 tgtConfDir: /etc/tgt/conf.d
 pool:
-  opensds-volumes:
+  sodafoundation-volumes:
     storageType: block
     availabilityZone: default
     extras:
       dataStorage:
-        #DataStorageLineOfService 1.1.0, possibly extended by OpenSDS
+        #DataStorageLineOfService 1.1.0, possibly extended 
         provisioningPolicy: Thin
         isSpaceEfficient: false
       ioConnectivity:
-        #IOConnectivityLineOfService 1.1.0, possibly extended by openSDS
+        #IOConnectivityLineOfService 1.1.0, possibly extended 
         accessProtocol: iscsi
         maxIOPS: 7000000
         maxBWS: 600

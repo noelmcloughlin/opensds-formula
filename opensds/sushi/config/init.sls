@@ -1,16 +1,16 @@
-# opensds/sushi/config/init.sls
+# sodafoundation/sushi/config/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',) %}
-{%- from 'opensds/files/macros.j2' import update_config with context %}
+    {%- if s.deploy_project not in ('gelato',) %}
+{%- from 'sodafoundation/files/macros.j2' import update_config with context %}
 
-        {%- for id in opensds.sushi.ids %}
-             {%- if 'opensdsconf' in opensds.sushi and id in opensds.sushi.opensdsconf %}
-                 {%- if opensds.sushi.opensdsconf[id] is mapping %}
+        {%- for id in s.sushi.ids %}
+             {%- if 'conf' in s.sushi and id in s.sushi.conf %}
+                 {%- if s.sushi.conf[id] is mapping %}
 
-{{ update_config('opensds','sushi config', id, opensds.sushi.opensdsconf[id], opensds.conf)}}
+{{ update_config('sodafoundation','sushi config', id, s.sushi.conf[id], s.conf)}}
 
                  {%- endif %}
              {%- endif %}

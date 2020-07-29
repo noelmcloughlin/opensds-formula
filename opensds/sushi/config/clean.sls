@@ -1,17 +1,17 @@
-# opensds/sushi/config/clean.sls
+# sodafoundation/sushi/config/clean.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',) %}
+    {%- if s.deploy_project not in ('gelato',) %}
 
-{%- from 'opensds/files/macros.j2' import cleanup_config with context %}
-{%- from "opensds/map.jinja" import golang, packages with context %}
+{%- from 'sodafoundation/files/macros.j2' import cleanup_config with context %}
+{%- from "sodafoundation/map.jinja" import golang, packages with context %}
 
-        {%- for id in opensds.sushi.ids %}
-            {%- if "opensdsconf" in opensds.sushi and id in opensds.sushi.opensdsconf and opensds.sushi.opensdsconf[id] is mapping %}
+        {%- for id in s.sushi.ids %}
+            {%- if "conf" in s.sushi and id in s.sushi.conf and s.sushi.conf[id] is mapping %}
 
-{{ cleanup_config('opensds', 'sushi config', id, opensds.conf)}}
+{{ cleanup_config('sodafoundation', 'sushi config', id, s.conf)}}
 
             {%- endif %}
         {%- endfor %}

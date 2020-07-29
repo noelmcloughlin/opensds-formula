@@ -9,7 +9,7 @@
         {%- if 'repo' in subsys.daemon[id]['strategy']|lower %}
             {# you may want to expand this over time #}
             {%- if id not in ('cinder',) %}
-                {%- set workdir = golang.go_path + '/src/github.com/opensds' %}
+                {%- set workdir = golang.go_path + '/src/github.com/sodafoundation' %}
             {%- endif %}
         {%- endif %}
         {%- if 'build' in subsys.daemon[id]['strategy']|lower %}
@@ -225,14 +225,14 @@
       stop: {{ daemon.stop }}
          {%- endif %}
          {%- if id|lower in ('provisioner',) %}
-         ##### workaround https://github.com/sodafoundation/opensds-installer/issues/110
+         ##### workaround https://github.com/sodafoundation/sodafoundation-installer/issues/110
       workdir: {{ self.dir.sushi }}/nbp/{{ id }}
          {%- elif id|lower in ('cinder',) %}
       workdir: {{ self.dir.sushi }}/{{ id }}/{{ daemon.repo.build_subdir }}
          {%- elif 'repo' in daemon and daemon.repo is mapping and 'binaries_subdir' in daemon.repo and daemon.repo.binaries_subdir %}
-      workdir: {{ dir }}/{{ '' if not plugin_type else plugin_type }}/{{ 'opensds' if id == 'osdsdock' else id }}/{{ daemon.repo.binaries_subdir }}
+      workdir: {{ dir }}/{{ '' if not plugin_type else plugin_type }}/{{ 'sodafoundation' if id == 'osdsdock' else id }}/{{ daemon.repo.binaries_subdir }}
          {%- else %}
-      workdir: {{ dir }}/{{ '' if not plugin_type else plugin_type }}/{{ 'opensds' if id == 'osdsdock' else id }}
+      workdir: {{ dir }}/{{ '' if not plugin_type else plugin_type }}/{{ 'sodafoundation' if id == 'osdsdock' else id }}
          {%- endif %}
          {%- if 'before' in daemon and daemon.before is iterable and daemon.before is not string %}
       before: {{ daemon.before }}
@@ -379,10 +379,10 @@
     - force: False
     - subdir: True
           {%- if id|lower == 'provisioner' %}
-              # workaround https://github.com/sodafoundation/opensds-installer/issues/110
+              # workaround https://github.com/sodafoundation/sodafoundation-installer/issues/110
     - name: {{ opt.dir.sushi }}/nbp/provisioner/
-    - source: {{ dir }}/{{ id }}/opensds-{{ b }}
-    - onlyif: test -f {{ dir }}/{{ id }}/bin/opensds-{{ b }}
+    - source: {{ dir }}/{{ id }}/sodafoundation-{{ b }}
+    - onlyif: test -f {{ dir }}/{{ id }}/bin/sodafoundation-{{ b }}
           {%- elif "repo" in daemon and daemon.repo is mapping and "binaries_subdir" in daemon.repo and daemon.repo.binaries_subdir %}
     - name: {{ dest }}/
     - source: {{ dir }}/{{ id }}/{{ daemon.repo.binaries_subdir }}/{{ b }}

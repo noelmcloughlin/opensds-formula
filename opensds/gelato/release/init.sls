@@ -1,4 +1,4 @@
-###  opensds/gelato/release/init.sls
+###  sodafoundation/gelato/release/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 

@@ -1,28 +1,28 @@
-###  opensds/backend/block/daemon/init.sls
+###  sodafoundation/backend/block/daemon/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-  {%- if opensds.deploy_project not in ('gelato',)  %}
+  {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
-{%- from "opensds/map.jinja" import docker, packages, golang with context %}
-{%- from 'opensds/files/macros.j2' import build_source, cp_binaries with context %}
-{%- from 'opensds/files/macros.j2' import workflow, container_run, service_run with context %}
+{%- from "sodafoundation/map.jinja" import docker, packages, golang with context %}
+{%- from 'sodafoundation/files/macros.j2' import build_source, cp_binaries with context %}
+{%- from 'sodafoundation/files/macros.j2' import workflow, container_run, service_run with context %}
 
 include:
-  - opensds.backend.block.box
+  - sodafoundation.backend.block.box
 
-      {%- if opensds.backend.block.ids is iterable and opensds.backend.block.ids is string %}
-          {%- set backends = opensds.backend.block.ids.split(', ') %}
+      {%- if sodafoundation.backend.block.ids is iterable and sodafoundation.backend.block.ids is string %}
+          {%- set backends = sodafoundation.backend.block.ids.split(', ') %}
       {%- else %}
-          {%- set backends = opensds.backend.block.ids %}
+          {%- set backends = sodafoundation.backend.block.ids %}
       {%- endif %}
       {%- for id in backends %}
-          {%- if 'daemon' in opensds.backend.block and id in opensds.backend.block.daemon  %}
-              {%- if opensds.backend.block.daemon[ id ] is mapping %}
+          {%- if 'daemon' in sodafoundation.backend.block and id in sodafoundation.backend.block.daemon  %}
+              {%- if sodafoundation.backend.block.daemon[ id ] is mapping %}
 
     {%- if id == 'cinder' and  grains.os in ('CentOS', ) %}
-opensds infra use git2 on EL:
+sodafoundation infra use git2 on EL:
   pkg.installed:
     - sources:
       - ius-release: https://centos7.iuscommunity.org/ius-release.rpm
@@ -32,7 +32,7 @@ opensds infra use git2 on EL:
       - /sbin/setsebool -P nis_enabled 1        ###for RabbitMQ
   {%- endif %}
 
-{{ workflow('opensds', 'backend block daemon', id, opensds.backend.block, opensds.dir.sushi, opensds, golang) }}
+{{ workflow('sodafoundation', 'backend block daemon', id, sodafoundation.backend.block, sodafoundation.dir.sushi, sodafoundation, golang) }}
 
               {%- endif %}
           {%- endif %}

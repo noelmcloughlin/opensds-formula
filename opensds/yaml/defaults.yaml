@@ -1,9 +1,9 @@
-###  opensds/defaults.yaml
+###  sodafoundation/defaults.yaml
 # vim: sts=2 ts=2 sw=2 et ai
 #
 
-opensds:
-  conf: /etc/opensds/opensds.conf
+sodafoundation:
+  conf: /etc/sodafoundation/sodafoundation.conf
   deploy_project: all    ##### 'hotpot', 'gelato' or 'all' ####
   host: 127.0.0.1
   pkgs: []
@@ -14,21 +14,21 @@ opensds:
   force_clone: True
 
   environ:
-    opensds_endpoint: '127.0.0.1:50040'
-    opensds_auth_strategy: 'keystone'
+    sodafoundation_endpoint: '127.0.0.1:50040'
+    sodafoundation_auth_strategy: 'keystone'
     csi_endpoint: '127.0.0.1:50040'
     docker_opts: --dns 8.8.8.8 --dns 8.8.4.4
 
   dir:
-    config: /etc/opensds               #leave me alone
-    driver: /etc/opensds/driver        #leave me alone
-    log: /var/log/opensds
-    tmp: /tmp/opensds
-    devstack: /opt/opensds-devstack-linux-amd64
-    hotpot: /opt/opensds-linux-amd64
-    sushi: /opt/opensds-sushi-linux-amd64
-    gelato: /opt/opensds-gelato-linux-amd64
-    dashboard: /opt/opensds-dashboard-linux-amd64
+    config: /etc/sodafoundation               #leave me alone
+    driver: /etc/sodafoundation/driver        #leave me alone
+    log: /var/log/sodafoundation
+    tmp: /tmp/sodafoundation
+    devstack: /opt/sodafoundation-devstack-linux-amd64
+    hotpot: /opt/sodafoundation-linux-amd64
+    sushi: /opt/sodafoundation-sushi-linux-amd64
+    gelato: /opt/sodafoundation-gelato-linux-amd64
+    dashboard: /opt/sodafoundation-dashboard-linux-amd64
 
   retry_option:
     # https://docs.saltstack.com/en/latest/ref/states/requisites.html#retrying-states

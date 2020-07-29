@@ -1,15 +1,15 @@
-###  opensds/dock/init.sls
+###  sodafoundation/dock/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
+    {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
 include:
-  - opensds.dock.release
-  - opensds.dock.repo
-  - opensds.dock.config
-  - opensds.dock.drivers
-  - opensds.dock.daemon
+  - sodafoundation.dock.release
+  - sodafoundation.dock.repo
+  - sodafoundation.dock.config
+  - sodafoundation.dock.drivers
+  - sodafoundation.dock.daemon
 
     {%- endif %}

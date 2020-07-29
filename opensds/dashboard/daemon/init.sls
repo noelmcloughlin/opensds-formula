@@ -1,30 +1,30 @@
-###  opensds/dashboard/daemon/init.sls
+###  sodafoundation/dashboard/daemon/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-    {%- if opensds.deploy_project not in ('gelato',)  %}
+    {%- if s.deploy_project not in ('gelato',)  %}
 
-{%- from "opensds/map.jinja" import packages, docker, golang with context %}
-{%- from 'opensds/files/macros.j2' import build_source, copy_build with context %}
-{%- from 'opensds/files/macros.j2' import workflow, container_run, service_run with context %}
+{%- from "sodafoundation/map.jinja" import packages, docker, golang with context %}
+{%- from 'sodafoundation/files/macros.j2' import build_source, copy_build with context %}
+{%- from 'sodafoundation/files/macros.j2' import workflow, container_run, service_run with context %}
 
 include:
-  - opensds.dashboard.config
+  - s.dashboard.config
 
-        {%- for id in opensds.dashboard.ids %}
-            {%- if 'daemon' in opensds.dashboard and id in opensds.dashboard.daemon  %}
-                {%- if opensds.dashboard.daemon[ id ] is mapping %}
+        {%- for id in s.dashboard.ids %}
+            {%- if 'daemon' in s.dashboard and id in s.dashboard.daemon  %}
+                {%- if s.dashboard.daemon[ id ] is mapping %}
 
-                    {%- if 'container' in opensds.dashboard.daemon[ id ]['strategy']|lower %}
-opensds dashboard daemon {{ id }} ensure nginx stopped and disabled:
+                    {%- if 'container' in s.dashboard.daemon[ id ]['strategy']|lower %}
+sodafoundation dashboard daemon {{ id }} ensure nginx stopped and disabled:
   service.dead:
     - name: nginx
     - enable: False
                     {%- endif %}
 
-                    {%- if 'build' in opensds.dashboard.daemon[ id ]['strategy']|lower %}
-opensds dashboard config install angular cli:
+                    {%- if 'build' in s.dashboard.daemon[ id ]['strategy']|lower %}
+sodafoundation dashboard config install angular cli:
   cmd.run:
     - name: 'npm install -g @angular/cli'
     - env:
@@ -32,10 +32,10 @@ opensds dashboard config install angular cli:
     - onlyif:
       - npm --version 2>/dev/null
       - {{ id|lower == 'dashboard' }}
-   - unless: {{ 'container' in opensds.dashboard.daemon[ id ]|lower }}
+   - unless: {{ 'container' in s.dashboard.daemon[ id ]|lower }}
                     {%- endif %}
 
-{{ workflow('opensds', 'dashboard daemon', id, opensds.dashboard, opensds.dir.dashboard, opensds, golang) }}
+{{ workflow('sodafoundation', 'dashboard daemon', id, s.dashboard, s.dir.dashboard, sodafoundation, golang) }}
 
                 {%- endif %}
             {%- endif %}

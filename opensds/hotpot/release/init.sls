@@ -1,4 +1,4 @@
-###  opensds/hotpot/release/init.sls
+###  sodafoundation/hotpot/release/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 

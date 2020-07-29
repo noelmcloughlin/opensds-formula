@@ -1,10 +1,10 @@
-================
-opensds-formula
-================
+======================
+sodafoundation-formula
+======================
 
-Deploy official releases of OpenSDS (www.opensds.io) using Salt on CENTOS-7, UBUNTU-18, and OPENSUSE-15. This is an experimental solution using repeatable patterns to deploy cloud-native stack using infrastructure as code.  This formula compliments the OpenSDS-Installer_ project.
+Deploy official releases of SodaFoundation (www.sodafoundation.io) using Salt on CENTOS, UBUNTU, and OPENSUSE. This is an experimental solution using repeatable patterns to deploy cloud-native stack using infrastructure as code.  This formula compliments the SodaFoundation-Installer_ project.
 
-.. _OpenSDS-Installer: https://github.com/sodafoundation/opensds-installer
+.. _SodaFoundation-Installer: https://github.com/sodafoundation/sodafoundation-installer
 
 
 .. notes::
@@ -13,93 +13,93 @@ Deploy official releases of OpenSDS (www.opensds.io) using Salt on CENTOS-7, UBU
     <http://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html>`_.
 
 Architectural View
-===================
+==================
 
 .. image:: solutionDesign.png
-   :target: https://github.com/sodafoundation/opensds
+   :target: https://github.com/sodafoundation/sodafoundation
    :scale: 25 %
    :alt: salt formula high level architecture
 
 Available META states
-======================
+=====================
 
 .. contents::
     :local:
 
-``opensds``
-------------
+``sodafoundation``
+------------------
 
-Runs all the other states in the formula. Used by the ``OpenSDS-installer/salt`` module.
+Runs all the other states in the formula. Used by the ``SodaFoundation-installer/salt`` module.
 
-``opensds.infra``
------------------
+``sodafoundation.infra``
+------------------------
 
 Deploy os profile (PATHS) and environmental dependencies (packages, nginx, docker, etc) via salt.
 
-``opensds.telemetry``
------------------
+``sodafoundation.telemetry``
+----------------------------
 
 Deploy prometheus and grafana via salt.
 
-``opensds.keystone``
------------------
+``sodafoundation.keystone``
+---------------------------
 
 Deploy devstack with keystone configuration for hotpot and gelato.
 
-``opensds.config``
------------------
+``sodafoundation.config``
+-------------------------
 
-Deploy opensds configuration file
+Deploy sodafoundation configuration file
 
-``opensds.hotpot``
------------------
+``sodafoundation.hotpot``
+-------------------------
 
-Deploy opensds hotpot
+Deploy sodafoundation hotpot
 
-``opensds.auth``
------------------
+``sodafoundation.auth``
+-----------------------
 
 Deploy authentication service (default keystone).
 
-``opensds.database``
------------------
+``sodafoundation.database``
+---------------------------
 
 Deploy database service (default etcd).
 
-``opensds.dock``
------------------
+``sodafoundation.dock``
+-----------------------
 
-Deploy osdsdock service.
+Deploy sdock service.
 
-``opensds.sushi``
------------------
+``sodafoundation.sushi``
+------------------------
 
-Deploy osdsnbp service.
+Deploy North bound plugin service.
 
-``opensds.gelato``
------------------
+``sodafoundation.gelato``
+-------------------------
 
 Deploy multi-cloud service.
 
-``opensds.dashboard``
------------------
+``sodafoundation.dashboard``
+----------------------------
 
 Deploy Dashboard service.
 
-``opensds.freespace``
------------------
+``sodafoundation.freespace``
+----------------------------
 
 Free some disk space
 
 
 Site-specific Data Collection
-================
+=============================
 
 The ``site.j2`` and ``pillar.example`` files contain required pillars!
 
 You may review and cautiously update ``site.j2`` to reflect site requirements and preferences.
 
 Prerequisite
-==============
+============
 
-Prepare your environment by running the ``salt.formulas`` state from ``https://github.com/saltstack-formulas/salt-formula``. See ``pillar.example`` and/or opensds-installer/salt README.
+Prepare your environment by running the ``salt.formulas`` state from ``https://github.com/saltstack-formulas/salt-formula``. See ``pillar.example`` and/or sodafoundation-installer/salt README.

@@ -1,15 +1,15 @@
-###  opensds/sushi/init.sls
+###  sodafoundation/sushi/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation with context %}
 
-   {%- if opensds.deploy_project not in ('gelato',)  %}
+   {%- if sodafoundation.deploy_project not in ('gelato',)  %}
 
 include:
-  - opensds.sushi.plugin.clean
-  - opensds.sushi.config.clean
-  - opensds.sushi.release.clean
-  - opensds.sushi.repo.clean
+  - sodafoundation.sushi.plugin.clean
+  - sodafoundation.sushi.config.clean
+  - sodafoundation.sushi.release.clean
+  - sodafoundation.sushi.repo.clean
   # iscsi.initiator.remove     ### https://github.com/saltstack-formulas/iscsi-formula/issues/12
   - kubernetes.kubectl.clean
 

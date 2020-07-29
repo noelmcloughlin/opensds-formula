@@ -1,4 +1,4 @@
-###  opensds/backend/block/release/init.sls
+###  sodafoundation/backend/block/release/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 

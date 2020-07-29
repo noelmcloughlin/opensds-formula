@@ -1,51 +1,51 @@
-# opensds/gelato/config/init.sls
+# sodafoundation/gelato/config/init.sls
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{%- from "opensds/map.jinja" import opensds with context %}
+{%- from "sodafoundation/map.jinja" import sodafoundation as s with context %}
 
-    {%- if opensds.deploy_project not in ('hotpot',) %}
+    {%- if s.deploy_project not in ('hotpot',) %}
 
-{%- from "opensds/map.jinja" import devstack, golang with context %}
-{%- from 'opensds/files/macros.j2' import update_config with context %}
+{%- from "sodafoundation/map.jinja" import devstack, golang with context %}
+{%- from 'sodafoundation/files/macros.j2' import update_config with context %}
 
 include:
-  - opensds.config
+  - s.config
 
-        {%- for id in opensds.gelato.ids %}
-            {%- if 'opensdsconf' in opensds.gelato and id in opensds.gelato.opensdsconf %}
-                {%- set config = opensds.gelato.opensdsconf[id] %}
+        {%- for id in s.gelato.ids %}
+            {%- if 'conf' in s.gelato and id in s.gelato.conf %}
+                {%- set config = s.gelato.conf[id] %}
 
-{{ update_config('opensds','gelato config', id, config, opensds.conf) }}
+{{ update_config('sodafoundation','gelato config', id, config, s.conf) }}
 
             {%- endif %}
                 ################################
                 #### {{id}} docker compose file
                 ################################
-            {%- set daemon = opensds.gelato.daemon[ id|string ] %}
+            {%- set daemon = s.gelato.daemon[ id|string ] %}
             {%- if 'compose' in daemon.strategy|lower %}
 
-opensds gelato config {{ id }} change default auth-strategy:
+sodafoundation gelato config {{ id }} change default auth-strategy:
   file.replace:
-    - name: {{ golang.go_path }}/src/github.com/opensds/{{ id }}/docker-compose.yml
+    - name: {{ golang.go_path }}/src/github.com/sodafoundation/{{ id }}/docker-compose.yml
     - pattern: 'OS_AUTH_AUTHSTRATEGY=.*$'
-    - repl: 'OS_AUTH_AUTHSTRATEGY={{ opensds.auth.daemon.osdsauth.strategy }}'
+    - repl: 'OS_AUTH_AUTHSTRATEGY={{ s.auth.daemon.osdsauth.strategy }}'
     - backup: '.salt.bak'
 
-opensds gelato config {{ id }} change default auth-url:
+sodafoundation gelato config {{ id }} change default auth-url:
   file.replace:
-    - name: {{ golang.go_path }}/src/github.com/opensds/{{ id }}/docker-compose.yml
+    - name: {{ golang.go_path }}/src/github.com/sodafoundation/{{ id }}/docker-compose.yml
     - pattern: 'OS_AUTH_URL=.*$'
-    - repl: 'OS_AUTH_URL=http://{{ opensds.host }}/identity'
+    - repl: 'OS_AUTH_URL=http://{{ s.host }}/identity'
 
-opensds gelato config {{ id }} change default username:
+sodafoundation gelato config {{ id }} change default username:
   file.replace:
-    - name: {{ golang.go_path }}/src/github.com/opensds/{{ id }}/docker-compose.yml
+    - name: {{ golang.go_path }}/src/github.com/sodafoundation/{{ id }}/docker-compose.yml
     - pattern: 'OS_USERNAME=.*$'
-    - repl: 'OS_USERNAME={{ opensds.gelato.service }}'
+    - repl: 'OS_USERNAME={{ s.gelato.service }}'
 
-opensds gelato config {{ id }} change default password:
+sodafoundation gelato config {{ id }} change default password:
   file.replace:
-    - name: {{ golang.go_path }}/src/github.com/opensds/{{ id }}/docker-compose.yml
+    - name: {{ golang.go_path }}/src/github.com/sodafoundation/{{ id }}/docker-compose.yml
     - pattern: 'OS_PASSWORD=.*$'
     - repl: 'OS_PASSWORD={{ devstack.local.os_password }}'
 
